@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.umkc.rashmi.EntityTestController" tests="6" skipped="0" failures="0" errors="0" timestamp="2017-09-30T18:27:15" hostname="DESKTOP-BD6839L" time="2.348">
+  <properties/>
+  <testcase name="testCheckCollision" classname="edu.umkc.rashmi.EntityTestController" time="0.211"/>
+  <testcase name="testUpdateForAsteroid" classname="edu.umkc.rashmi.EntityTestController" time="0.021"/>
+  <testcase name="testUpdateForPlayer" classname="edu.umkc.rashmi.EntityTestController" time="0.012"/>
+  <testcase name="testCheckCollision" classname="edu.umkc.rashmi.EntityTestController" time="0.009"/>
+  <testcase name="testUpdateForAsteroid" classname="edu.umkc.rashmi.EntityTestController" time="0.01"/>
+  <testcase name="testUpdateForPlayer" classname="edu.umkc.rashmi.EntityTestController" time="0.017"/>
+  <system-out><![CDATA[Inside test case 3 no of lives: 
+Asteroid Postion: -323.11290563929185 223.51539173426448
+Player position :275.0 275.0
+collision state :false
+Asteroid Postion: 231.5978885172193 223.7039804863429
+Player position :231.5978885172193 223.7039804863429
+collision state :true
+Inside update of asteroid: 
+Asteroid position :211.09015225062132 491.8063733566505
+Asteroid velocity :-1.4302567926143241
+Asteorid position :202.5086114949354 491.7769900614635
+Asteorid velocity :-1.4302567926143241 -0.014691647593513539
+Asteorid expected position :209.659895458007 491.791681709057
+Inside update of player: 
+Player position :275.0 275.0
+Player velocity :0.0
+Thrust added
+Thrust added
+Player position :274.98208016841915 274.96174428007066
+Player velocity :-0.017873817092537762 -0.07616496102888529
+Player expected position :274.98212618290745 274.9238350389711
+Inside test case 3 no of lives: 
+Asteroid Postion: 985.6529787763856 349.2671911619525
+Player position :275.0 275.0
+collision state :false
+Asteroid Postion: 438.127149468347 348.6998211369141
+Player position :438.127149468347 348.6998211369141
+collision state :true
+Inside update of asteroid: 
+Asteroid position :1058.962751115284 330.4130857742643
+Asteroid velocity :-0.5763887102730194
+Asteorid position :505.5044188536458 333.28728160479267
+Asteorid velocity :-0.5763887102730194 1.437097915264185
+Asteorid expected position :1058.386362405011 331.8501836895285
+Inside update of player: 
+Player position :275.0 275.0
+Player velocity :0.0
+Thrust added
+Thrust added
+Player position :274.98208016841915 274.96174428007066
+Player velocity :-0.017873817092537762 -0.07616496102888529
+Player expected position :274.98212618290745 274.9238350389711
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

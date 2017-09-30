@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Asteroids</a> &gt; <a href="index.source.html" class="el_package">org.psnbtech.entity</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package org.psnbtech.entity;
+
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.psnbtech.Game;
+import org.psnbtech.WorldPanel;
+import org.psnbtech.util.Vector2;
+
+public class Player extends Entity {
+	
+	private static final double DEFAULT_ROTATION = -Math.PI / 2.0;
+	
+	/**
+	 * The magnitude of our ship's thrust.
+	 */
+	private static final double THRUST_MAGNITUDE = 0.0385;
+	
+	/**
+	 * The maximum speed at which our ship can travel.
+	 */
+	private static final double MAX_VELOCITY_MAGNITUDE = 6.5;
+	
+	/**
+	 * The speed at which the ship rotates.
+	 */
+	private static final double ROTATION_SPEED = 0.052;
+	
+	/**
+	 * The factor at which our ship slows down.
+	 */
+	private static final double SLOW_RATE = 0.995;
+	
+	/**
+	 * The maximum number of bullets that can be fired at once.
+	 */
+	private static final int MAX_BULLETS = 4;
+	
+	/**
+	 * The number of cycles that must elapse between shots.
+	 */
+	private static final int FIRE_RATE = 4;
+	
+	/**
+	 * The maximum number of shots that can be fired consecutively before
+	 * overheating.
+	 */
+	private static final int MAX_CONSECUTIVE_SHOTS = 8;
+	
+	/**
+	 * The number of cycles that must elapse before we stop overheating.
+	 */
+	private static final int MAX_OVERHEAT = 30;
+	
+	/**
+	 * Whether the ship should apply thrust when it updates.
+	 */
+	private boolean thrustPressed;
+	
+	/**
+	 * Whether the ship should rotate to the left when it updates.
+	 */
+	private boolean rotateLeftPressed;
+	
+	/**
+	 * Whether the ship should rotate to the right when it updates.
+	 */
+	private boolean rotateRightPressed;
+	
+	/**
+	 * Whether the ship should fire a bullet when it updates.
+	 */
+	private boolean firePressed;
+		
+	/**
+	 * Whether the ship is allowed to fire a bullet.
+	 */
+	private boolean firingEnabled;
+	
+	/**
+	 * The number of consecutive shots fired.
+	 */
+	private int consecutiveShots;
+	
+	/**
+	 * The cooldown timer for firing.
+	 */
+	private int fireCooldown;
+	
+	/**
+	 * The cooldown timer for overheating.
+	 */
+	private int overheatCooldown;
+	
+	/**
+	 * The current animation frame.
+	 */
+	private int animationFrame;
+	
+	/**
+	 * The bullets that have been fired.
+	 */
+	private List&lt;Bullet&gt; bullets;
+	
+	/**
+	 * Initializes a new Player instance.
+	 */
+	public Player() {
+<span class="fc" id="L111">		super(new Vector2(WorldPanel.WORLD_SIZE / 2.0, WorldPanel.WORLD_SIZE / 2.0), new Vector2(0.0, 0.0), 10.0, 0);</span>
+<span class="fc" id="L112">		this.bullets = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L113">		this.rotation = DEFAULT_ROTATION;</span>
+<span class="fc" id="L114">		this.thrustPressed = false;</span>
+<span class="fc" id="L115">		this.rotateLeftPressed = false;</span>
+<span class="fc" id="L116">		this.rotateRightPressed = false;</span>
+<span class="fc" id="L117">		this.firePressed = false;</span>
+<span class="fc" id="L118">		this.firingEnabled = true;</span>
+<span class="fc" id="L119">		this.fireCooldown = 0;</span>
+<span class="fc" id="L120">		this.overheatCooldown = 0;</span>
+<span class="fc" id="L121">		this.animationFrame = 0;</span>
+<span class="fc" id="L122">	}</span>
+	
+	public Player(Vector2 position) {
+<span class="fc" id="L125">		super(position, new Vector2(0.0, 0.0), 10.0, 0);</span>
+<span class="fc" id="L126">		this.bullets = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L127">		this.rotation = DEFAULT_ROTATION;</span>
+<span class="fc" id="L128">		this.thrustPressed = false;</span>
+<span class="fc" id="L129">		this.rotateLeftPressed = false;</span>
+<span class="fc" id="L130">		this.rotateRightPressed = false;</span>
+<span class="fc" id="L131">		this.firePressed = false;</span>
+<span class="fc" id="L132">		this.firingEnabled = true;</span>
+<span class="fc" id="L133">		this.fireCooldown = 0;</span>
+<span class="fc" id="L134">		this.overheatCooldown = 0;</span>
+<span class="fc" id="L135">		this.animationFrame = 0;</span>
+<span class="fc" id="L136">	}</span>
+	
+	/**
+	 * Sets whether this player should apply thrust when it updates.
+	 * @param state Whether to apply thrust.
+	 */
+	public void setThrusting(boolean state) {
+<span class="fc" id="L143">		this.thrustPressed = state;</span>
+<span class="fc" id="L144">	}</span>
+	
+	/**
+	 * Sets whether this player should rotate left when it updates.
+	 * @param state Whether to rotate left.
+	 */
+	public void setRotateLeft(boolean state) {
+<span class="fc" id="L151">		this.rotateLeftPressed = state;</span>
+<span class="fc" id="L152">	}</span>
+	
+	/**
+	 * Sets whether this player should rotate right when it updates.
+	 * @param state Whether to rotate right.
+	 */
+	public void setRotateRight(boolean state) {
+<span class="nc" id="L159">		this.rotateRightPressed = state;</span>
+<span class="nc" id="L160">	}</span>
+	
+	/**
+	 * Sets whether this player should fire when it updates.
+	 * @param state Whether to fire.
+	 */
+	public void setFiring(boolean state) {
+<span class="nc" id="L167">		this.firePressed = state;</span>
+<span class="nc" id="L168">	}</span>
+		
+	/**
+	 * Sets whether this player can fire when it updates.
+	 * @param state Whether this player can fire.
+	 */
+	public void setFiringEnabled(boolean state) {
+<span class="fc" id="L175">		this.firingEnabled = state;</span>
+<span class="fc" id="L176">	}</span>
+	
+	/**
+	 * Resets the player to it's default spawn position, speed, and rotation,
+	 * and clears the list of bullets.
+	 */
+	public void reset() {
+<span class="fc" id="L183">		this.rotation = DEFAULT_ROTATION;</span>
+<span class="fc" id="L184">		position.set(WorldPanel.WORLD_SIZE / 2.0, WorldPanel.WORLD_SIZE / 2.0);</span>
+<span class="fc" id="L185">		velocity.set(0.0, 0.0);</span>
+<span class="fc" id="L186">		bullets.clear();</span>
+<span class="fc" id="L187">	}</span>
+		
+	@Override
+	public void update(Game game) {
+<span class="fc" id="L191">		super.update(game);</span>
+		
+		//Increment the animation frame.
+<span class="fc" id="L194">		this.animationFrame++;</span>
+		
+		/*
+		 * Rotate the ship if only one of the rotation flags are true, as doing
+		 * one rotation will cancel the effect of doing the other.
+		 * 
+		 * The conditional statement can alternatively be written like this:
+		 * 
+		 * if(rotateLeftPressed) {
+		 *     rotate(-ROTATION_SPEED);
+		 * } else {
+		 *     rotate(ROTATION_SPEED);
+		 * }
+		 */
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if(rotateLeftPressed != rotateRightPressed) {</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">			rotate(rotateLeftPressed ? -ROTATION_SPEED : ROTATION_SPEED);</span>
+		}
+		
+		/*
+		 * Apply thrust to our ship's velocity, and ensure that the ship is not
+		 * going faster than the maximum magnitude.
+		 */
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if(thrustPressed) {</span>
+			
+<span class="fc" id="L218">			System.out.println(&quot;Thrust added&quot;);</span>
+			/*
+			 * Here we create a new vector based on our ship's rotation, and scale
+			 * it by our thrust's magnitude. Then we add that vector to our velocity.
+			 */
+<span class="fc" id="L223">			velocity.add(new Vector2(rotation).scale(THRUST_MAGNITUDE));</span>
+			
+			/*
+			 * Here we determine whether our ship is going faster than is
+			 * allowed. Like when checking for collisions, we check the squared
+			 * magnitude because it is quicker to square a value than it is to
+			 * take the square root.
+			 * 
+			 * If our velocity exceeds our maximum allowed velocity, we normalize
+			 * it (giving it a magnitude of 1.0), and scale it to be he maximum.
+			 */
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if(velocity.getLengthSquared() &gt;= MAX_VELOCITY_MAGNITUDE * MAX_VELOCITY_MAGNITUDE) {</span>
+<span class="nc" id="L235">				velocity.normalize().scale(MAX_VELOCITY_MAGNITUDE);</span>
+			}
+		}
+		
+		/*
+		 * If our ship is moving, slow it down slightly, which causes the ship
+		 * to some to a gradual stop.
+		 */
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		if(velocity.getLengthSquared() != 0.0) {</span>
+<span class="fc" id="L244">			velocity.scale(SLOW_RATE);</span>
+		}
+		
+		/*
+		 * Loop through each bullet and remove it from the list if necessary.
+		 */
+<span class="fc" id="L250">		Iterator&lt;Bullet&gt; iter = bullets.iterator();</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		while(iter.hasNext()) {</span>
+<span class="nc" id="L252">			Bullet bullet = iter.next();</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">			if(bullet.needsRemoval()) {</span>
+<span class="nc" id="L254">				iter.remove();</span>
+			}
+<span class="nc" id="L256">		}</span>
+		
+		/*
+		 * Decrement the fire and overheat cooldowns, and determine if we can fire another
+		 * bullet.
+		 */
+<span class="fc" id="L262">		this.fireCooldown--;</span>
+<span class="fc" id="L263">		this.overheatCooldown--;</span>
+<span class="pc bpc" id="L264" title="6 of 8 branches missed.">		if(firingEnabled &amp;&amp; firePressed &amp;&amp; fireCooldown &lt;= 0 &amp;&amp; overheatCooldown &lt;= 0) {</span>
+			/*
+			 * We can only create a new bullet if we haven't yet exceeded the
+			 * maximum number of bullets that we can have fired at once.
+			 * 
+			 * If a new bullet can be fired, we reset the fire cooldown, and
+			 * register a new bullet to the game world.
+			 */
+<span class="nc bnc" id="L272" title="All 2 branches missed.">			if(bullets.size() &lt; MAX_BULLETS) {</span>
+<span class="nc" id="L273">				this.fireCooldown = FIRE_RATE;</span>
+				
+<span class="nc" id="L275">				Bullet bullet = new Bullet(this, rotation);</span>
+<span class="nc" id="L276">				bullets.add(bullet);</span>
+<span class="nc" id="L277">				game.registerEntity(bullet);</span>
+			}
+			
+			/*
+			 * Since we're attempting to fire a bullet, we increment the number
+			 * of consecutive shots and determine if we should set the overheat
+			 * flag.
+			 * 
+			 * This prevents us from being able to wipe out entire groups of
+			 * asteroids in one burst if we're accurate enough, and will prevent
+			 * us from firing a continuous stream of bullets until we start missing.
+			 */
+<span class="nc" id="L289">			this.consecutiveShots++;</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">			if(consecutiveShots == MAX_CONSECUTIVE_SHOTS) {</span>
+<span class="nc" id="L291">				this.consecutiveShots = 0;</span>
+<span class="nc" id="L292">				this.overheatCooldown = MAX_OVERHEAT;</span>
+			}
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		} else if(consecutiveShots &gt; 0) {</span>
+			//Decrement the number of consecutive shots, since we're not trying to fire.
+<span class="nc" id="L296">			this.consecutiveShots--;</span>
+		}
+<span class="fc" id="L298">	}</span>
+	
+	@Override
+	public void handleCollision(Game game, Entity other) {
+		//Kill the player if it collides with an Asteroid.
+<span class="fc bfc" id="L303" title="All 2 branches covered.">		if(other.getClass() == Asteroid.class) {</span>
+<span class="fc" id="L304">			game.killPlayer();</span>
+		}
+<span class="fc" id="L306">	}</span>
+	
+	@Override
+	public void draw(Graphics2D g, Game game) {
+		/*
+		 * When the player recently spawned, it will flash for a few seconds to indicate
+		 * that it is invulnerable. The player will not flash if the game is paused.
+		 */
+<span class="pc bpc" id="L314" title="2 of 6 branches missed.">		if(!game.isPlayerInvulnerable() || game.isPaused() || animationFrame % 20 &lt; 10) {</span>
+			/*
+			 * Draw the ship. The nose will face right (0.0 on the unit circle). All
+			 * transformations will be handled by the WorldPanel before calling the draw
+			 * function.
+			 */
+<span class="fc" id="L320">			g.drawLine(-10, -8, 10, 0);</span>
+<span class="fc" id="L321">			g.drawLine(-10, 8, 10, 0);</span>
+<span class="fc" id="L322">			g.drawLine(-6, -6, -6, 6);</span>
+		
+			//Draw the flames behind the ship if we thrusting, and not paused.
+<span class="pc bpc" id="L325" title="2 of 6 branches missed.">			if(!game.isPaused() &amp;&amp; thrustPressed &amp;&amp; animationFrame % 6 &lt; 3) {</span>
+<span class="fc" id="L326">				g.drawLine(-6, -6, -12, 0);</span>
+<span class="fc" id="L327">				g.drawLine(-6, 6, -12, 0);</span>
+			}
+		}
+<span class="fc" id="L330">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

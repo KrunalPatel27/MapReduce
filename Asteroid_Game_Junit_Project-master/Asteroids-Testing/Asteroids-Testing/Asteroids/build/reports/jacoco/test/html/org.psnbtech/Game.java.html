@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Asteroids</a> &gt; <a href="index.source.html" class="el_package">org.psnbtech</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package org.psnbtech;
+
+import java.awt.BorderLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+import javax.swing.JFrame;
+
+import org.psnbtech.entity.Asteroid;
+import org.psnbtech.entity.Entity;
+import org.psnbtech.entity.Player;
+import org.psnbtech.util.Clock;
+
+/**
+ * The {@code Game} class is responsible for initializing and running the game.
+ * @author Brendan Jones
+ *
+ */
+public class Game extends JFrame {
+	
+	/**
+	 * The Serial Version Unique Identifier.
+	 */
+	public static final long serialVersionUID = -3535839203174039672L;
+
+	/**
+	 * The number of frame per second the game should run at.
+	 */
+	public static final int FRAMES_PER_SECOND = 60;
+	
+	/**
+	 * The number of nanoseconds that should elapse each frame. This is far more
+	 * accurate than using milliseconds.
+	 */
+	public static final long FRAME_TIME = (long)(1000000000.0 / FRAMES_PER_SECOND);
+	
+	/**
+	 * The number of frames that the &quot;current level&quot; message appears for.
+	 */
+	public static final int DISPLAY_LEVEL_LIMIT = 60;
+	
+	/**
+	 * The value that {@code deathCooldown} will be set to upon player death.
+	 */
+	public static final int DEATH_COOLDOWN_LIMIT = 200;
+	
+	/**
+	 * The value for {@code deathCooldown} that the Player respawns.
+	 */
+	public static final int RESPAWN_COOLDOWN_LIMIT = 100;
+	
+	/**
+	 * The value for {@code deathCooldown} that the player becomes vulnerable,
+	 * and regains the ability to fire.
+	 */
+	public static final int INVULN_COOLDOWN_LIMIT = 0;
+	
+	/**
+	 * The value that {@code resetCooldown} is set to when the player loses.
+	 */
+	public static final int RESET_COOLDOWN_LIMIT = 120;
+		
+	/**
+	 * The WorldPanel instance.
+	 */
+	public WorldPanel world;
+	
+	/**
+	 * The Clock instance for handling the game updates.
+	 */
+	public Clock logicTimer;
+	
+	/**
+	 * The Random instance for spawning entities.
+	 */
+	public Random random;
+	
+	/**
+	 * The list of Entity objects that exist in the game world.
+	 */
+	public List&lt;Entity&gt; entities;
+	
+	/**
+	 * The list of Entity objects that need to be added to the game world.
+	 */
+	public List&lt;Entity&gt; pendingEntities;
+		
+	/**
+	 * The Player instance.
+	 */
+	public Player player;
+	
+	/**
+	 * &lt;p&gt;The death cooldown timer is responsible for spreading a Player's death
+	 * out over time, so the player does not instantly spawn.&lt;/p&gt;
+	 * 
+	 * &lt;p&gt;Upon death, this value is set to {@code DEATH_COOLDOWN_LIMIT}, and is
+	 * decremented each frame.&lt;/p&gt;
+	 * 
+	 * &lt;p&gt;Once the value reaches {@code RESPAWN_COOLDOWN_LIMIT}, the player's ship
+	 * will be reset and the player will regain the ability to move.&lt;/p&gt;
+	 * 
+	 * &lt;p&gt;Once the value reaches {@code INVULN_COOLDOWN_LIMIT}, the Player's ship
+	 * will be vulnerable to collisions and the Player will regain the ability to
+	 * shoot.&lt;/p&gt;
+	 */
+	public int deathCooldown;
+	
+	/**
+	 * &lt;p&gt;The show level cooldown timer is responsible for displaying the current
+	 * level briefly after the previous level has been completed.&lt;/p&gt;
+	 */
+	public int showLevelCooldown;
+	
+	/**
+	 * &lt;p&gt;The reset cooldown prevents the game from instantly restarting if the
+	 * player is pressing any keys upon death, as key events are continuously
+	 * fired until the player lets go of the key.&lt;/p&gt;
+	 * 
+	 * &lt;p&gt;This timer adds a short delay that must expire before the game can
+	 * be reset, giving the player time to react.&lt;/p&gt;
+	 */
+	public int restartCooldown;
+	
+	/**
+	 * The current score.
+	 */
+	public int score;
+	
+	/**
+	 * The number of lives the Player has left.
+	 */
+	public int lives;
+	
+	/**
+	 * The current level the player is on.
+	 */
+	public int level;
+	
+	/**
+	 * Whether or not the game is over.
+	 */
+	public boolean isGameOver;
+	
+	/**
+	 * Whether or not the player has pressed anything to restart the game.
+	 */
+	public boolean restartGame;
+	
+	/**
+	 * Create a new instance of the Game.
+	 */
+	public Game() {
+		//Initialize the window's basic properties.
+<span class="fc" id="L160">		super(&quot;Asteroids&quot;);</span>
+<span class="fc" id="L161">		setLayout(new BorderLayout());</span>
+<span class="fc" id="L162">		setDefaultCloseOperation(EXIT_ON_CLOSE);</span>
+<span class="fc" id="L163">		setResizable(false);</span>
+		
+		//Create and add the WorldPanel instance to the window.
+<span class="fc" id="L166">		add(this.world = new WorldPanel(this), BorderLayout.CENTER);</span>
+		
+		/*
+		 * Here we add a key listener to the window so that we can process incoming
+		 * user input.
+		 * 
+		 * Because the player is updated every cycle, rather than when it receives
+		 * input (like I did for Tetris), we're only going to set a flag to indicate
+		 * the current input state. The actual change in the player's entity's state
+		 * will be handled in the game loop.
+		 * 
+		 * The reason we do this is simple. Events are only fired when input is received
+		 * from the user. While the keyPressed event is continuously fired, it isn't
+		 * necessarily going to be in sync with our main thread, which would cause
+		 * all sorts of unpredictable behavior from our ship.
+		 * 
+		 * Note that any &quot;pressed&quot; event will restart the game rather than change the
+		 * ship's state if the conditions are met.
+		 */
+<span class="fc" id="L185">		addKeyListener(new KeyAdapter() {</span>
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//Determine which key was pressed.
+<span class="nc bnc" id="L189" title="All 6 branches missed.">				switch(e.getKeyCode()) {</span>
+				
+				//Indicate that we want to apply thrust to our ship.
+				case KeyEvent.VK_W:
+				case KeyEvent.VK_UP:
+<span class="nc bnc" id="L194" title="All 2 branches missed.">					if(!checkForRestart()) {</span>
+<span class="nc" id="L195">						player.setThrusting(true);</span>
+					}
+					break;
+					
+				//Indicate that we want to rotate our ship to the left.
+				case KeyEvent.VK_A:
+				case KeyEvent.VK_LEFT:
+<span class="nc bnc" id="L202" title="All 2 branches missed.">					if(!checkForRestart()) {</span>
+<span class="nc" id="L203">						player.setRotateLeft(true);</span>
+					}
+					break;
+					
+				//Indicate that we want to rotate our ship to the right.
+				case KeyEvent.VK_D:
+				case KeyEvent.VK_RIGHT:
+<span class="nc bnc" id="L210" title="All 2 branches missed.">					if(!checkForRestart()) {</span>
+<span class="nc" id="L211">						player.setRotateRight(true);</span>
+					}
+					break;
+					
+				//Indicate that we want our ship to fire bullets.
+				case KeyEvent.VK_SPACE:
+<span class="nc bnc" id="L217" title="All 2 branches missed.">					if(!checkForRestart()) {</span>
+<span class="nc" id="L218">						player.setFiring(true);</span>
+					}
+					break;
+					
+				//Indicate that we want to pause the game.
+				case KeyEvent.VK_P:
+<span class="nc bnc" id="L224" title="All 2 branches missed.">					if(!checkForRestart()) {</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">						logicTimer.setPaused(!logicTimer.isPaused());</span>
+					}
+					break;
+					
+				//Handle all other key presses.
+				default:
+<span class="nc" id="L231">					checkForRestart();</span>
+					break;
+					
+				}
+<span class="nc" id="L235">			}</span>
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+<span class="nc bnc" id="L239" title="All 5 branches missed.">				switch(e.getKeyCode()) {</span>
+
+				//Indicate that we no long want to apply thrust to the ship.
+				case KeyEvent.VK_W:
+				case KeyEvent.VK_UP:
+<span class="nc" id="L244">					player.setThrusting(false);</span>
+<span class="nc" id="L245">					break;</span>
+				
+				//Indicate that we no longer want to rotate our ship left.
+				case KeyEvent.VK_A:
+				case KeyEvent.VK_LEFT:
+<span class="nc" id="L250">					player.setRotateLeft(false);</span>
+<span class="nc" id="L251">					break;</span>
+
+				//Indicate that we no longer want to rotate our ship right.
+				case KeyEvent.VK_D:
+				case KeyEvent.VK_RIGHT:
+<span class="nc" id="L256">					player.setRotateRight(false);</span>
+<span class="nc" id="L257">					break;</span>
+					
+				//Indicate that we no long want to fire bullets.
+				case KeyEvent.VK_SPACE:
+<span class="nc" id="L261">					player.setFiring(false);</span>
+					break;	
+				}
+<span class="nc" id="L264">			}</span>
+		});
+		
+		//Resize the window to the correct size, position it in the center of the screen, and display it.
+<span class="fc" id="L268">		pack();</span>
+<span class="fc" id="L269">		setLocationRelativeTo(null);</span>
+<span class="fc" id="L270">		setVisible(true);</span>
+<span class="fc" id="L271">	}</span>
+	
+	/**
+	 * Check the user input to see if the key should be used to restart the game.
+	 * @return Whether or not the key restarted the game.
+	 */
+	public boolean checkForRestart() {
+<span class="nc bnc" id="L278" title="All 4 branches missed.">		boolean restart = (isGameOver &amp;&amp; restartCooldown &lt;= 0);</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if(restart) {</span>
+<span class="nc" id="L280">			restartGame = true;</span>
+		}
+<span class="nc" id="L282">		return restart;</span>
+	}
+	
+	
+	
+	public void initGame()
+	{
+<span class="fc" id="L289">		this.random = new Random();</span>
+<span class="fc" id="L290">		this.entities = new LinkedList&lt;Entity&gt;();</span>
+<span class="fc" id="L291">		this.pendingEntities = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L292">		this.player = new Player();</span>
+		
+		//Set the variables to their default values.
+<span class="fc" id="L295">		resetGame();</span>
+		
+		//Create the logic timer and enter the game loop.
+<span class="fc" id="L298">		this.logicTimer = new Clock(FRAMES_PER_SECOND);</span>
+		
+<span class="fc" id="L300">	}</span>
+	/**
+	 * Starts the game running, and enters the main game loop.
+	 */
+	public void startGame() {
+		//Initialize the engine's variables.
+<span class="nc" id="L306">		this.random = new Random();</span>
+<span class="nc" id="L307">		this.entities = new LinkedList&lt;Entity&gt;();</span>
+<span class="nc" id="L308">		this.pendingEntities = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L309">		this.player = new Player();</span>
+		
+		//Set the variables to their default values.
+<span class="nc" id="L312">		resetGame();</span>
+		
+		//Create the logic timer and enter the game loop.
+<span class="nc" id="L315">		this.logicTimer = new Clock(FRAMES_PER_SECOND);</span>
+		while(true) {
+			//Get the time that the frame started.
+<span class="nc" id="L318">			long start = System.nanoTime();</span>
+			
+			/*
+			 * Update the game once for every cycle that has elapsed. If the game
+			 * starts to fall behind, the game will update multiple times for each
+			 * frame that is rendered in order to catch up.
+			 */
+<span class="nc" id="L325">			logicTimer.update();</span>
+<span class="nc bnc" id="L326" title="All 4 branches missed.">			for(int i = 0; i &lt; 5 &amp;&amp; logicTimer.hasElapsedCycle(); i++) {</span>
+<span class="nc" id="L327">				updateGame();</span>
+			}
+			
+			//Repaint the window.
+<span class="nc" id="L331">			world.repaint();</span>
+			
+			/*
+			 * Determine how many nanoseconds we have left during this cycle,
+			 * and sleep until it is time for the next frame to start.
+			 */
+<span class="nc" id="L337">			long delta = FRAME_TIME - (System.nanoTime() - start);</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">			if(delta &gt; 0) {</span>
+				try {
+<span class="nc" id="L340">					Thread.sleep(delta / 1000000L, (int) delta % 1000000);</span>
+<span class="nc" id="L341">				} catch(Exception e) {</span>
+<span class="nc" id="L342">					e.printStackTrace();</span>
+<span class="nc" id="L343">				}</span>
+			}
+<span class="nc" id="L345">		}</span>
+	}
+	
+	/**
+	 * Update the game entities and states.
+	 */
+	public void updateGame(){
+		/*
+		 * Here we add any pending entities to the world.
+		 * 
+		 * Two lists are required because we will frequently add entities to the
+		 * world while we are iterating over them, which causes all sorts of
+		 * errors.
+		 */
+<span class="fc" id="L359">		entities.addAll(pendingEntities);</span>
+		
+<span class="fc" id="L361">		pendingEntities.clear();</span>
+		
+		/*
+		 * Decrement the restart cooldown.
+		 */
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">		if(restartCooldown &gt; 0) {</span>
+<span class="nc" id="L367">			this.restartCooldown--;</span>
+		}
+		
+		/*
+		 * Decrement the show level cooldown.
+		 */
+<span class="fc bfc" id="L373" title="All 2 branches covered.">		if(showLevelCooldown &gt; 0) {</span>
+<span class="fc" id="L374">			this.showLevelCooldown--;</span>
+		}
+		
+		/*
+		 * Restart the game if needed.
+		 */
+<span class="pc bpc" id="L380" title="3 of 4 branches missed.">		if(isGameOver &amp;&amp; restartGame) {</span>
+<span class="nc" id="L381">			resetGame();</span>
+		}
+		
+		/*
+		 * If the game is currently in progress, and there are no enemies left alive,
+		 * we prepare the next level.
+		 */
+<span class="pc bpc" id="L388" title="1 of 4 branches missed.">		if(!isGameOver &amp;&amp; areEnemiesDead()) {</span>
+			//Increment the current level, and set the show level cooldown.
+<span class="fc" id="L390">			System.out.println(&quot;level up&quot;);</span>
+<span class="fc" id="L391">			this.level++;</span>
+<span class="fc" id="L392">			this.showLevelCooldown = DISPLAY_LEVEL_LIMIT;</span>
+			
+			//Reset the entity lists (to remove bullets).
+<span class="fc" id="L395">			resetEntityLists();</span>
+			
+			//Reset the player's entity to it's default state, and re-enable firing.
+<span class="fc" id="L398">			player.reset();</span>
+<span class="fc" id="L399">			player.setFiringEnabled(true);</span>
+			
+			//Add the asteroids to the world.
+<span class="fc bfc" id="L402" title="All 2 branches covered.">			for(int i = 0; i &lt; level + 2; i++) {</span>
+<span class="fc" id="L403">				registerEntity(new Asteroid(random));</span>
+			}
+		}
+		
+		/*
+		 * If the player has recently died, decrement the cooldown and handle any
+		 * special cases when they occur.
+		 */
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">		if(deathCooldown &gt; 0) {</span>
+<span class="nc" id="L412">			this.deathCooldown--;</span>
+<span class="nc bnc" id="L413" title="All 3 branches missed.">			switch(deathCooldown) {</span>
+			
+			//Reset the entity to it's default spawn state, and disable firing.
+			case RESPAWN_COOLDOWN_LIMIT:
+<span class="nc" id="L417">				player.reset();</span>
+<span class="nc" id="L418">				player.setFiringEnabled(false);</span>
+<span class="nc" id="L419">				break;</span>
+			
+			//Re-enable the ability to fire, as we're no longer invulnerable.
+			case INVULN_COOLDOWN_LIMIT:
+<span class="nc" id="L423">				player.setFiringEnabled(true);</span>
+				break;
+			
+			}
+		}
+		
+		/*
+		 * Only run any of the update code if we're not currently displaying the
+		 * level to the player.
+		 */
+<span class="fc bfc" id="L433" title="All 2 branches covered.">		if(showLevelCooldown == 0) {</span>
+			
+			//Iterate through the Entities and update their states.
+<span class="fc bfc" id="L436" title="All 2 branches covered.">			for(Entity entity : entities) {</span>
+<span class="fc" id="L437">				entity.update(this);</span>
+<span class="fc" id="L438">			}</span>
+			
+			/*
+			 * Handle any collisions that take place.
+			 * 
+			 * The outer loop iterates through all registered entities, while the
+			 * inner loop only iterates through the Entities later in the list
+			 * than the outer Entity.
+			 * 
+			 * This ensures that the same collision isn't handled multiple times,
+			 * which allows us to make changes to an entity without it interfering
+			 * with other collision results.
+			 */
+<span class="fc bfc" id="L451" title="All 2 branches covered.">			for(int i = 0; i &lt; entities.size(); i++) {</span>
+<span class="fc" id="L452">				Entity a = entities.get(i);</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">				for(int j = i + 1; j &lt; entities.size(); j++) {</span>
+<span class="fc" id="L454">					Entity b = entities.get(j);</span>
+<span class="pc bpc" id="L455" title="2 of 10 branches missed.">					if(i != j &amp;&amp; a.checkCollision(b) &amp;&amp; ((a != player &amp;&amp; b != player) || deathCooldown &lt;= INVULN_COOLDOWN_LIMIT)) {</span>
+<span class="fc" id="L456">						a.handleCollision(this, b);</span>
+<span class="fc" id="L457">						b.handleCollision(this, a);</span>
+					}
+				}
+			}
+			
+			//Loop through and remove &quot;dead&quot; entities.
+<span class="fc" id="L463">			Iterator&lt;Entity&gt; iter = entities.iterator();</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">			while(iter.hasNext()) {</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">				if(iter.next().needsRemoval()) {</span>
+<span class="fc" id="L466">					iter.remove();</span>
+				}
+			}
+		}
+<span class="fc" id="L470">	}</span>
+	
+	/**
+	 * Set the game's variables to their default values.
+	 */
+	public void resetGame() {
+<span class="fc" id="L476">		this.score = 0;</span>
+<span class="fc" id="L477">		this.level = 0;</span>
+<span class="fc" id="L478">		this.lives = 3;</span>
+<span class="fc" id="L479">		this.deathCooldown = 0;</span>
+<span class="fc" id="L480">		this.isGameOver = false;</span>
+<span class="fc" id="L481">		this.restartGame = false;</span>
+<span class="fc" id="L482">		resetEntityLists();</span>
+<span class="fc" id="L483">	}</span>
+	
+	/**
+	 * Removes all entities, with the exception of the player, from the world.
+	 */
+	public void resetEntityLists() {
+<span class="fc" id="L489">		pendingEntities.clear();</span>
+<span class="fc" id="L490">		entities.clear();</span>
+<span class="fc" id="L491">		entities.add(player);</span>
+<span class="fc" id="L492">	}</span>
+	
+	/**
+	 * Determines whether or not any asteroids still exist in the world.
+	 * @return Whether or not all of the enemies are dead.
+	 */
+	public boolean areEnemiesDead() {
+<span class="fc bfc" id="L499" title="All 2 branches covered.">		for(Entity e : entities) {</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">			if(e.getClass() == Asteroid.class) {</span>
+<span class="fc" id="L501">				return false;</span>
+			}
+<span class="fc" id="L503">		}</span>
+<span class="fc" id="L504">		return true;</span>
+	}
+	
+	/**
+	 * Updates the game state to reflect a player death.
+	 */
+	public void killPlayer() {
+		//Decrement the number of lives that we still have.
+<span class="fc" id="L512">		this.lives--;</span>
+	
+		/*
+		 * If there are no lives remaining, prepare the game over state variables,
+		 * otherwise prepare the death cooldown.
+		 * 
+		 * Note that death cooldown is set to Integer.MAX_VALUE in the event of a
+		 * game over. While finite, the amount of time it would take for it to
+		 * reach zero is far longer than anyone would care to run the program
+		 * for.
+		 */
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">		if(lives == 0) {</span>
+<span class="nc" id="L524">			this.isGameOver = true;</span>
+<span class="nc" id="L525">			this.restartCooldown = RESET_COOLDOWN_LIMIT;</span>
+<span class="nc" id="L526">			this.deathCooldown = Integer.MAX_VALUE;</span>
+		} else {
+<span class="fc" id="L528">			this.deathCooldown = DEATH_COOLDOWN_LIMIT;</span>
+		}
+		
+		//Disable the ability to fire.
+<span class="fc" id="L532">		player.setFiringEnabled(false);</span>
+<span class="fc" id="L533">	}</span>
+	
+	/**
+	 * Add to the current score.
+	 * @param score The number of points to add.
+	 */
+	public void addScore(int score) {
+<span class="fc" id="L540">		this.score += score;</span>
+<span class="fc" id="L541">	}</span>
+	
+	/**
+	 * Adds a new entity to the game world.
+	 * @param entity The entity to add.
+	 */
+	public void registerEntity(Entity entity) {
+<span class="fc" id="L548">		pendingEntities.add(entity);</span>
+<span class="fc" id="L549">	}</span>
+	
+	/**
+	 * Whether or not we are in the game over state.
+	 * @return Whether or not the game is over.
+	 */
+	public boolean isGameOver() {
+<span class="fc" id="L556">		return isGameOver;</span>
+	}
+	
+	/**
+	 * Determines whether or not the player is invulnerable.
+	 * @return Whether or not the player is invulnerable.
+	 */
+	public boolean isPlayerInvulnerable() {
+<span class="fc bfc" id="L564" title="All 2 branches covered.">		return (deathCooldown &gt; INVULN_COOLDOWN_LIMIT);</span>
+	}
+	
+	/**
+	 * Determines whether or not the player can be drawn.
+	 * @return Whether or not the player can be drawn.
+	 */
+	public boolean canDrawPlayer() {
+<span class="fc bfc" id="L572" title="All 2 branches covered.">		return (deathCooldown &lt;= RESPAWN_COOLDOWN_LIMIT);</span>
+	}
+	
+	/**
+	 * Gets the current score.
+	 * @return The current score.
+	 */
+	public int getScore() {
+<span class="fc" id="L580">		return score;</span>
+	}
+	
+	/**
+	 * Gets the number of lives remaining.
+	 * @return The number of lives remaining.
+	 */
+	public int getLives() {
+<span class="fc" id="L588">		return lives;</span>
+	}
+	
+	/**
+	 * Gets the current level.
+	 * @return The current level.
+	 */
+	public int getLevel() {
+<span class="fc" id="L596">		return level;</span>
+	}
+	
+	/**
+	 * Gets whether or not the game is paused.
+	 * @return Whether or not the game is paused.
+	 */
+	public boolean isPaused() {
+<span class="fc" id="L604">		return logicTimer.isPaused();</span>
+	}
+	
+	/**
+	 * Gets whether or not the level is being shown.
+	 * @return Whether or not the level is being shown.
+	 */
+	public boolean isShowingLevel() {
+<span class="fc bfc" id="L612" title="All 2 branches covered.">		return (showLevelCooldown &gt; 0);</span>
+	}
+
+	/**
+	 * Gets the Random instance.
+	 * @return The Random instance.
+	 */
+	public Random getRandom() {
+<span class="fc" id="L620">		return random;</span>
+	}
+	
+	/**
+	 * Gets the list of Entities in the world.
+	 * @return The Entity list.
+	 */
+	public List&lt;Entity&gt; getEntities() {
+<span class="fc" id="L628">		return entities;</span>
+	}
+	
+	/**
+	 * Gets the Player instance.
+	 * @return
+	 */
+	public Player getPlayer() {
+<span class="fc" id="L636">		return player;</span>
+	}
+	
+	/**
+	 * Entry point of the program. Creates and starts a new game instance.
+	 * @param args Unused command line arguments.
+	 */
+	public static void main(String[] args) {
+<span class="nc" id="L644">		Game game = new Game();</span>
+<span class="nc" id="L645">		game.startGame();</span>
+<span class="nc" id="L646">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

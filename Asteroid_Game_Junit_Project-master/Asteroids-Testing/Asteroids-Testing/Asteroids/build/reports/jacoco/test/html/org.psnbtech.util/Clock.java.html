@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Clock.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Asteroids</a> &gt; <a href="index.source.html" class="el_package">org.psnbtech.util</a> &gt; <span class="el_source">Clock.java</span></div><h1>Clock.java</h1><pre class="source lang-java linenums">package org.psnbtech.util;
+
+/**
+ * The {@code Clock} class is responsible for tracking the number of cycles
+ * that have elapsed over time. 
+ * @author Brendan Jones
+ *
+ */
+public class Clock {
+	
+	/**
+	 * The number of milliseconds that make up one cycle.
+	 */
+	private float millisPerCycle;
+	
+	/**
+	 * The last time that the clock was updated (used for calculating the
+	 * delta time).
+	 */
+	private long lastUpdate;
+	
+	/**
+	 * The number of cycles that have elapsed and have not yet been polled.
+	 */
+	private int elapsedCycles;
+	
+	/**
+	 * The amount of excess time towards the next elapsed cycle.
+	 */
+	private float excessCycles;
+	
+	/**
+	 * Whether or not the clock is paused.
+	 */
+	private boolean isPaused;
+	
+	/**
+	 * Creates a new clock and sets it's cycles-per-second.
+	 * @param cyclesPerSecond The number of cycles that elapse per second.
+	 */
+<span class="fc" id="L41">	public Clock(float cyclesPerSecond) {</span>
+<span class="fc" id="L42">		setCyclesPerSecond(cyclesPerSecond);</span>
+<span class="fc" id="L43">		reset();</span>
+<span class="fc" id="L44">	}</span>
+	
+	/**
+	 * Sets the number of cycles that elapse per second.
+	 * @param cyclesPerSecond The number of cycles per second.
+	 */
+	public void setCyclesPerSecond(float cyclesPerSecond) {
+<span class="fc" id="L51">		this.millisPerCycle = (1.0f / cyclesPerSecond) * 1000;</span>
+<span class="fc" id="L52">	}</span>
+	
+	/**
+	 * Resets the clock stats. Elapsed cycles and cycle excess will be reset
+	 * to 0, the last update time will be reset to the current time, and the
+	 * paused flag will be set to false.
+	 */
+	public void reset() {
+<span class="fc" id="L60">		this.elapsedCycles = 0;</span>
+<span class="fc" id="L61">		this.excessCycles = 0.0f;</span>
+<span class="fc" id="L62">		this.lastUpdate = getCurrentTime();</span>
+<span class="fc" id="L63">		this.isPaused = false;</span>
+<span class="fc" id="L64">	}</span>
+	
+	/**
+	 * Updates the clock stats. The number of elapsed cycles, as well as the
+	 * cycle excess will be calculated only if the clock is not paused. This
+	 * method should be called every frame even when paused to prevent any
+	 * nasty surprises with the delta time.
+	 */
+	public void update() {
+		//Get the current time and calculate the delta time.
+<span class="nc" id="L74">		long currUpdate = getCurrentTime();</span>
+<span class="nc" id="L75">		float delta = (float)(currUpdate - lastUpdate) + excessCycles;</span>
+		
+		//Update the number of elapsed and excess ticks if we're not paused.
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if(!isPaused) {</span>
+<span class="nc" id="L79">			this.elapsedCycles += (int)Math.floor(delta / millisPerCycle);</span>
+<span class="nc" id="L80">			this.excessCycles = delta % millisPerCycle;</span>
+		}
+		
+		//Set the last update time for the next update cycle.
+<span class="nc" id="L84">		this.lastUpdate = currUpdate;</span>
+<span class="nc" id="L85">	}</span>
+	
+	/**
+	 * Pauses or unpauses the clock. While paused, a clock will not update
+	 * elapsed cycles or cycle excess, though the {@code update} method should
+	 * still be called every frame to prevent issues.
+	 * @param paused Whether or not to pause this clock.
+	 */
+	public void setPaused(boolean paused) {
+<span class="nc" id="L94">		this.isPaused = paused;</span>
+<span class="nc" id="L95">	}</span>
+	
+	/**
+	 * Checks to see if the clock is currently paused.
+	 * @return Whether or not this clock is paused.
+	 */
+	public boolean isPaused() {
+<span class="fc" id="L102">		return isPaused;</span>
+	}
+	
+	/**
+	 * Checks to see if a cycle has elapsed for this clock yet. If so,
+	 * the number of elapsed cycles will be decremented by one.
+	 * @return Whether or not a cycle has elapsed.
+	 * @see peekElapsedCycle
+	 */
+	public boolean hasElapsedCycle() {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if(elapsedCycles &gt; 0) {</span>
+<span class="nc" id="L113">			this.elapsedCycles--;</span>
+<span class="nc" id="L114">			return true;</span>
+		}
+<span class="nc" id="L116">		return false;</span>
+	}
+	
+	/**
+	 * Checks to see if a cycle has elapsed for this clock yet. Unlike
+	 * {@code hasElapsedCycle}, the number of cycles will not be decremented
+	 * if the number of elapsed cycles is greater than 0.
+	 * @return Whether or not a cycle has elapsed.
+	 * @see hasElapsedCycle
+	 */
+	public boolean peekElapsedCycle() {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		return (elapsedCycles &gt; 0);</span>
+	}
+	
+	/**
+	 * Calculates the current time in milliseconds using the computer's high
+	 * resolution clock. This is much more reliable than
+	 * {@code System.getCurrentTimeMillis()}, and quicker than
+	 * {@code System.nanoTime()}.
+	 * @return The current time in milliseconds.
+	 */
+	private static final long getCurrentTime() {
+<span class="fc" id="L138">		return (System.nanoTime() / 1000000L);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

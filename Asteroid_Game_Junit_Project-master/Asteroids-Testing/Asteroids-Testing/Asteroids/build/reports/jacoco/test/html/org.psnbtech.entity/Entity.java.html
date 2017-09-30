@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Entity.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Asteroids</a> &gt; <a href="index.source.html" class="el_package">org.psnbtech.entity</a> &gt; <span class="el_source">Entity.java</span></div><h1>Entity.java</h1><pre class="source lang-java linenums">package org.psnbtech.entity;
+
+import java.awt.Graphics2D;
+
+import org.psnbtech.Game;
+import org.psnbtech.WorldPanel;
+import org.psnbtech.util.Vector2;
+
+/**
+ * Represents an Entity within the game world.
+ * @author Brendan Jones
+ *
+ */
+public abstract class Entity {
+	
+	/**
+	 * The position of this entity.
+	 */
+	protected Vector2 position;
+	
+	/**
+	 * The velocity of this entity.
+	 */
+	protected Vector2 velocity;
+	
+	/**
+	 * The rotation of this entity.
+	 */
+	protected double rotation;
+	
+	/**
+	 * The collision radius.
+	 */
+	protected double radius;
+	
+	/**
+	 * Flags that the entity needs to be removed from the game.
+	 */
+	public boolean needsRemoval;
+	
+	/**
+	 * The number of points the player earns when this entity is destroyed.
+	 */
+	public int killScore;
+	
+	/**
+	 * Creates a new Entity instance.
+	 * @param position The position of the Entity.
+	 * @param velocity The velocity of the Entity.
+	 * @param radius The collision radius.
+	 * @param killScore The number of points awarded for killing this entity.
+	 */
+<span class="fc" id="L53">	public Entity(Vector2 position, Vector2 velocity, double radius, int killScore) {</span>
+<span class="fc" id="L54">		this.position = position;</span>
+<span class="fc" id="L55">		this.velocity = velocity;</span>
+<span class="fc" id="L56">		this.radius = radius;</span>
+<span class="fc" id="L57">		this.rotation = 0.0f;</span>
+<span class="fc" id="L58">		this.killScore = killScore;</span>
+<span class="fc" id="L59">		this.needsRemoval = false;</span>
+<span class="fc" id="L60">	}</span>
+	
+	/**
+	 * Rotates this Entity by amount.
+	 * @param amount The amount to rotate by.
+	 */
+	public void rotate(double amount) {
+<span class="fc" id="L67">		this.rotation += amount;</span>
+<span class="fc" id="L68">		this.rotation %= Math.PI * 2;</span>
+<span class="fc" id="L69">	}</span>
+	
+	/**
+	 * Gets the number of points awarded for killing this entity.
+	 * @return The kill score.
+	 */
+	public int getKillScore() {
+<span class="fc" id="L76">		return killScore;</span>
+	}
+	
+	/**
+	 * Flags that this Entity should be removed from the world.
+	 */
+	public void flagForRemoval() {
+<span class="fc" id="L83">		this.needsRemoval = true;</span>
+<span class="fc" id="L84">	}</span>
+	
+	/**
+	 * Gets the position of this Entity.
+	 * @return The position.
+	 */
+	public Vector2 getPosition() {
+<span class="fc" id="L91">		return position;</span>
+	}
+	
+	/**
+	 * Gets the velocity of this Entity.
+	 * @return The velocity.
+	 */
+	public Vector2 getVelocity() {
+<span class="fc" id="L99">		return velocity;</span>
+	}
+	
+	/**
+	 * Gets the rotation of this Entity.
+	 * @return The rotation.
+	 */
+	public double getRotation() {
+<span class="fc" id="L107">		return rotation;</span>
+	}
+	
+	/**
+	 * Gets the collision radius of this Entity.
+	 * @return The collision radius.
+	 */
+	public double getCollisionRadius() {
+<span class="fc" id="L115">		return radius;</span>
+	}
+	
+	/**
+	 * Checks whether this Entity needs to be removed.
+	 * @return Whether this Entity needs to be removed.
+	 */
+	public boolean needsRemoval() {
+<span class="fc" id="L123">		return needsRemoval;</span>
+	}
+	
+	/**
+	 * Updates the state of this Entity.
+	 * @param game The game instance.
+	 */
+	public void update(Game game) {
+		//System.out.println(&quot;pos&quot;+this.position.x);
+		//System.out.println(&quot;vel&quot;+this.velocity.x);
+		
+<span class="fc" id="L134">		position.add(velocity);</span>
+		
+		//System.out.println(&quot;pos&quot;+this.position.x);
+		//System.out.println(&quot;vel&quot;+this.velocity.x);
+		
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if(position.x &lt; 0.0f) {</span>
+<span class="fc" id="L140">			position.x += WorldPanel.WORLD_SIZE;</span>
+		}
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if(position.y &lt; 0.0f) {</span>
+<span class="nc" id="L143">			position.y += WorldPanel.WORLD_SIZE;</span>
+		}
+<span class="fc" id="L145">		position.x %= WorldPanel.WORLD_SIZE;</span>
+<span class="fc" id="L146">		position.y %= WorldPanel.WORLD_SIZE;</span>
+<span class="fc" id="L147">	}</span>
+	
+	/**
+	 * Determines whether two Entities have collided.
+	 * @param entity The Entity to check against.
+	 * @return Whether a collision occurred.
+	 */
+	public boolean checkCollision(Entity entity) {
+		/*
+		 * Here we use the Pythagorean Theorem to determine whether the two
+		 * Entities are close enough to collide.
+		 * 
+		 * The reason we are squaring everything is because it's much, much
+		 * quicker to square one variable than it is to take the square root
+		 * of another. While this game is simple enough that such minor
+		 * optimizations are unnecessary, it's still a good habit to get
+		 * into.
+		 */
+<span class="fc" id="L165">		double radius = entity.getCollisionRadius() + getCollisionRadius();</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		return (position.getDistanceToSquared(entity.position) &lt; radius * radius);</span>
+	}
+	
+	/**
+	 * Handle a collision with another Entity.
+	 * @param game The game instance.
+	 * @param other The Entity that we collided with.
+	 */
+	public abstract void handleCollision(Game game, Entity other);
+	
+	/**
+	 * Draw this Entity onto the window.
+	 * @param g The Graphics instance.
+	 * @param game The game instance.
+	 */
+	public abstract void draw(Graphics2D g, Game game);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
