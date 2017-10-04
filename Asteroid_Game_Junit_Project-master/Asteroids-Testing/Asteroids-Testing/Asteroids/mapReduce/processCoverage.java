@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.FileNotFoundException;
 
+import java.util.ArrayList;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 
@@ -71,9 +73,9 @@ public class processCoverage {
     public static class E_EReduce extends MapReduceBase implements
             Reducer< Text, Text, Text, Text >
     {   
-        private TreeMap<Integer,String> treeSet;
+        private TreeMap<String,String> treeSet;
         public String sortedByCoverage (Iterator values){
-            treeSet = new TreeMap<Integer,String>();
+            treeSet = new TreeMap<String,String>();
             String lasttoken = null;
             String line = "";
             int length =0;
@@ -81,8 +83,8 @@ public class processCoverage {
                 line = values.next().get();  
                 StringTokenizer s = new StringTokenizer(line,"\t"); 
                 String testName = s.nextToken(); 
-                int linesOfCoverageByTest = Integer.parseInt(s.nextToken());
-                treeSet.put(linesOfCoverageByTest, new String(testName));
+                String linesOfCoverageByTest = s.nextToken(); //Integer.parseInt(s.nextToken());
+                treeSet.put(new String(linesOfCoverageByTest), new String(testName));
                 length++;
             }
              // Get a set of the entries
@@ -91,14 +93,14 @@ public class processCoverage {
             Iterator i = set.iterator();
 
             String[] array = new String[length];
-            int previousKey= 0;
+            String previousKey= "";
             int counter = length - 1;
             
             while(i.hasNext()) {
                 Map.Entry me = (Map.Entry)i.next();
                 //to deal with descending order
                 array[counter--] = me.getValue().toString();
-                if(previousKey == Integer.parseInt(me.getKey()) ){
+                if(previousKey == me.getKey() ){
                     if(array[counter+1].compareTo( array[counter+2]) > 0 ){
                         String temp = array[counter +1];
                         array[counter+1] = array[counter+2];
