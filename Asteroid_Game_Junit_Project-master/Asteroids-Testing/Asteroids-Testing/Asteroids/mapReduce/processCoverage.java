@@ -35,8 +35,9 @@ public class processCoverage {
 
         public void configure(JobConf conf){
             try{
-                Path pt=new Path("hdfs:/path/to/file");//Location of file in HDFS
-                FileSystem fs = FileSystem.get(conf);
+               // Path pt=new Path("hdfs:/path/to/file");//Location of file in HDFS
+               // FileSystem fs = FileSystem.get(conf);
+                String filename = conf.get("map.input.file");
                 BufferedReader br=new BufferedReader(new InputStreamReader(fs.open(pt)));
                 String line;
                 line=br.readLine();
