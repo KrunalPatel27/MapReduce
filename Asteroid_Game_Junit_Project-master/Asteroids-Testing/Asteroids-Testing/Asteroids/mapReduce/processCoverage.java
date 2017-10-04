@@ -84,7 +84,7 @@ public class processCoverage {
                 length++;
             }
              // Get a set of the entries
-            Set set = tm.entrySet();
+            Set set = treeSet.entrySet();
             // Get an iterator
             Iterator i = set.iterator();
 
