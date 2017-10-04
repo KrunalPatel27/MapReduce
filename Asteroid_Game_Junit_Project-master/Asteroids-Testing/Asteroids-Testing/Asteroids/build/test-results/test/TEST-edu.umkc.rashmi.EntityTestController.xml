@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.umkc.rashmi.EntityTestController" tests="6" skipped="0" failures="0" errors="0" timestamp="2017-10-03T17:36:11" hostname="DESKTOP-BD6839L" time="2.467">
+<testsuite name="edu.umkc.rashmi.EntityTestController" tests="6" skipped="0" failures="0" errors="0" timestamp="2017-10-04T22:40:08" hostname="DESKTOP-BD6839L" time="2.592">
   <properties/>
-  <testcase name="testCheckCollision" classname="edu.umkc.rashmi.EntityTestController" time="0.182"/>
-  <testcase name="testUpdateForAsteroid" classname="edu.umkc.rashmi.EntityTestController" time="0.013"/>
+  <testcase name="testCheckCollision" classname="edu.umkc.rashmi.EntityTestController" time="0.38"/>
+  <testcase name="testUpdateForAsteroid" classname="edu.umkc.rashmi.EntityTestController" time="0.015"/>
+  <testcase name="testUpdateForPlayer" classname="edu.umkc.rashmi.EntityTestController" time="0.039"/>
+  <testcase name="testCheckCollision" classname="edu.umkc.rashmi.EntityTestController" time="0.011"/>
+  <testcase name="testUpdateForAsteroid" classname="edu.umkc.rashmi.EntityTestController" time="0.016"/>
   <testcase name="testUpdateForPlayer" classname="edu.umkc.rashmi.EntityTestController" time="0.02"/>
-  <testcase name="testCheckCollision" classname="edu.umkc.rashmi.EntityTestController" time="0.06"/>
-  <testcase name="testUpdateForAsteroid" classname="edu.umkc.rashmi.EntityTestController" time="0.059"/>
-  <testcase name="testUpdateForPlayer" classname="edu.umkc.rashmi.EntityTestController" time="0.041"/>
   <system-out><![CDATA[Inside test case 3 no of lives: 
-Asteroid Postion: 618.1849655793164 68.30990315458442
+Asteroid Postion: 708.9935612406339 114.93989850107272
 Player position :275.0 275.0
 collision state :false
-Asteroid Postion: 65.6050668777635 68.62534213922709
-Player position :65.6050668777635 68.62534213922709
+Asteroid Postion: 161.56231626208924 113.71753075237365
+Player position :161.56231626208924 113.71753075237365
 collision state :true
 Inside update of asteroid: 
-Asteroid position :442.2405810841575 481.104006270746
-Asteroid velocity :0.0753925004992773
-Asteorid position :442.69293608715316 479.2332515456827
-Asteorid velocity :0.0753925004992773 -0.9353773625316428
-Asteorid expected position :442.3159735846568 480.1686289082144
+Asteroid position :-176.35658522312144 116.43266178156276
+Asteroid velocity :1.0666478526916308
+Asteorid position :380.04330189302834 115.42483382766912
+Asteorid velocity :1.0666478526916308 -0.5039139769468245
+Asteorid expected position :-175.2899373704298 115.92874780461594
 Inside update of player: 
 Player position :275.0 275.0
 Player velocity :0.0
@@ -29,18 +29,18 @@ Player position :274.98208016841915 274.96174428007066
 Player velocity :-0.017873817092537762 -0.07616496102888529
 Player expected position :274.98212618290745 274.9238350389711
 Inside test case 3 no of lives: 
-Asteroid Postion: -529.7751473974374 305.72914612739146
+Asteroid Postion: 625.2147075890416 42.72138307734113
 Player position :275.0 275.0
 collision state :false
-Asteroid Postion: 16.299702721781713 305.459258929308
-Player position :16.299702721781713 305.459258929308
+Asteroid Postion: 71.26553552055532 41.95503317961893
+Player position :71.26553552055532 41.95503317961893
 collision state :true
 Inside update of asteroid: 
-Asteroid position :427.87527944381293 72.68971806604745
-Asteroid velocity :1.0183414045215817
-Asteorid position :433.98532787094246 72.73985786327177
-Asteorid velocity :1.0183414045215817 0.02506989861215983
-Asteorid expected position :428.89362084833454 72.7147879646596
+Asteroid position :219.93505586870793 49.03469203981382
+Asteroid velocity :0.10239033667705101
+Asteorid position :220.54939788877022 51.51280047867567
+Asteorid velocity :0.10239033667705101 1.2390542194309233
+Asteorid expected position :220.03744620538498 50.273746259244746
 Inside update of player: 
 Player position :275.0 275.0
 Player velocity :0.0

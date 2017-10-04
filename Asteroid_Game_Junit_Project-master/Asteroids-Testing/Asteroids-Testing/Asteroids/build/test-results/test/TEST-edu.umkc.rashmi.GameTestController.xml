@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.umkc.rashmi.GameTestController" tests="8" skipped="0" failures="0" errors="0" timestamp="2017-10-03T17:36:11" hostname="DESKTOP-BD6839L" time="4.329">
+<testsuite name="edu.umkc.rashmi.GameTestController" tests="8" skipped="0" failures="0" errors="0" timestamp="2017-10-04T22:40:09" hostname="DESKTOP-BD6839L" time="4.234">
   <properties/>
-  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.026"/>
-  <testcase name="testUpdateGameCollision" classname="edu.umkc.rashmi.GameTestController" time="0.009"/>
-  <testcase name="testUpdateGameLevel" classname="edu.umkc.rashmi.GameTestController" time="0.014"/>
+  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.019"/>
+  <testcase name="testUpdateGameCollision" classname="edu.umkc.rashmi.GameTestController" time="0.027"/>
+  <testcase name="testUpdateGameLevel" classname="edu.umkc.rashmi.GameTestController" time="0.028"/>
   <testcase name="testUpdateGameScore" classname="edu.umkc.rashmi.GameTestController" time="2.033"/>
-  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.022"/>
-  <testcase name="testUpdateGameCollision" classname="edu.umkc.rashmi.GameTestController" time="0.012"/>
-  <testcase name="testUpdateGameLevel" classname="edu.umkc.rashmi.GameTestController" time="0.012"/>
-  <testcase name="testUpdateGameScore" classname="edu.umkc.rashmi.GameTestController" time="2.026"/>
+  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.018"/>
+  <testcase name="testUpdateGameCollision" classname="edu.umkc.rashmi.GameTestController" time="0.018"/>
+  <testcase name="testUpdateGameLevel" classname="edu.umkc.rashmi.GameTestController" time="0.018"/>
+  <testcase name="testUpdateGameScore" classname="edu.umkc.rashmi.GameTestController" time="2.022"/>
   <system-out><![CDATA[ inside entities test case
-entities: [org.psnbtech.entity.Player@4b61bd0a, org.psnbtech.entity.Asteroid@143468f5, org.psnbtech.entity.Asteroid@1410934c, org.psnbtech.entity.Asteroid@2a69e003, org.psnbtech.entity.Asteroid@6ca691a9, org.psnbtech.entity.Asteroid@5be23f08] 0
+entities: [org.psnbtech.entity.Player@2df6189, org.psnbtech.entity.Asteroid@21798f41, org.psnbtech.entity.Asteroid@7c34753, org.psnbtech.entity.Asteroid@6e88ae9f, org.psnbtech.entity.Asteroid@17a259ee, org.psnbtech.entity.Asteroid@7a4ccfdc] 0
  inside collision test case
 lives after collision: 2
  inside level test case
 level up
-removevel info:1 [org.psnbtech.entity.Player@5f9786f9, org.psnbtech.entity.Asteroid@30b7b26e, org.psnbtech.entity.Asteroid@4745788c, org.psnbtech.entity.Asteroid@6c530f54]
+removevel info:1 [org.psnbtech.entity.Player@4e9bb9ce, org.psnbtech.entity.Asteroid@3689fb30, org.psnbtech.entity.Asteroid@3aa853c0, org.psnbtech.entity.Asteroid@41d48216]
 Inside score test case
 player position275.0 275.0
 Score :0
-Total entities before hit:[org.psnbtech.entity.Player@12d166ce]
-Score before hit:0[org.psnbtech.entity.Player@12d166ce, org.psnbtech.entity.Asteroid@40c482e0]
-Score after adding bullets20 [org.psnbtech.entity.Player@12d166ce, org.psnbtech.entity.Bullet@44d807b4, org.psnbtech.entity.Bullet@5c78a3b8, org.psnbtech.entity.Bullet@450659ef, org.psnbtech.entity.Bullet@21b1102d, org.psnbtech.entity.Bullet@25504608, org.psnbtech.entity.Bullet@3cac5479, org.psnbtech.entity.Bullet@4b92bb22, org.psnbtech.entity.Bullet@628bea05, org.psnbtech.entity.Bullet@45cc905a, org.psnbtech.entity.Bullet@1b9d1b06, org.psnbtech.entity.Bullet@4588e8fc, org.psnbtech.entity.Bullet@78eee98a, org.psnbtech.entity.Bullet@5901e88d, org.psnbtech.entity.Bullet@2a379d80, org.psnbtech.entity.Bullet@287a4f32, org.psnbtech.entity.Bullet@27d7510e, org.psnbtech.entity.Bullet@714490f9, org.psnbtech.entity.Bullet@6789c8cc, org.psnbtech.entity.Bullet@1d7008d0]
+Total entities before hit:[org.psnbtech.entity.Player@7f77d7c9]
+Score before hit:0[org.psnbtech.entity.Player@7f77d7c9, org.psnbtech.entity.Asteroid@6c6c0b60]
+Score after adding bullets20 [org.psnbtech.entity.Player@7f77d7c9, org.psnbtech.entity.Bullet@32867a06, org.psnbtech.entity.Bullet@1b330b1d, org.psnbtech.entity.Bullet@5abb5e2d, org.psnbtech.entity.Bullet@56006911, org.psnbtech.entity.Bullet@57d76f9d, org.psnbtech.entity.Bullet@543fed99, org.psnbtech.entity.Bullet@54f58b05, org.psnbtech.entity.Bullet@168286b, org.psnbtech.entity.Bullet@6d2f145c, org.psnbtech.entity.Bullet@46576f45, org.psnbtech.entity.Bullet@3e026929, org.psnbtech.entity.Bullet@7ee925f2, org.psnbtech.entity.Bullet@6b715387, org.psnbtech.entity.Bullet@16a134eb, org.psnbtech.entity.Bullet@3b474c37, org.psnbtech.entity.Bullet@cb63818, org.psnbtech.entity.Bullet@6dbabf62, org.psnbtech.entity.Bullet@7223c852, org.psnbtech.entity.Bullet@730414d5]
 Score after hit:20 20.0 20
  inside entities test case
-entities: [org.psnbtech.entity.Player@23fd4b9, org.psnbtech.entity.Asteroid@518f7b87, org.psnbtech.entity.Asteroid@3ee48a23, org.psnbtech.entity.Asteroid@478f7f6f, org.psnbtech.entity.Asteroid@3be9e13b, org.psnbtech.entity.Asteroid@1190f682] 0
+entities: [org.psnbtech.entity.Player@5ab78da7, org.psnbtech.entity.Asteroid@3160dd51, org.psnbtech.entity.Asteroid@79491ac9, org.psnbtech.entity.Asteroid@34f04d05, org.psnbtech.entity.Asteroid@52cc3489, org.psnbtech.entity.Asteroid@65f1e1d4] 0
  inside collision test case
 lives after collision: 2
  inside level test case
 level up
-removevel info:1 [org.psnbtech.entity.Player@7dcdbf5e, org.psnbtech.entity.Asteroid@53bbb1a8, org.psnbtech.entity.Asteroid@5a8e2672, org.psnbtech.entity.Asteroid@5c526af1]
+removevel info:1 [org.psnbtech.entity.Player@74f95f04, org.psnbtech.entity.Asteroid@64cf809c, org.psnbtech.entity.Asteroid@67a3659f, org.psnbtech.entity.Asteroid@25924748]
 Inside score test case
 player position275.0 275.0
 Score :0
-Total entities before hit:[org.psnbtech.entity.Player@59dab984]
-Score before hit:0[org.psnbtech.entity.Player@59dab984, org.psnbtech.entity.Asteroid@76942dd9]
-Score after adding bullets20 [org.psnbtech.entity.Player@59dab984, org.psnbtech.entity.Bullet@6a2c12e7, org.psnbtech.entity.Bullet@3c3c539a, org.psnbtech.entity.Bullet@3026cb00, org.psnbtech.entity.Bullet@670bc238, org.psnbtech.entity.Bullet@6d3a5f14, org.psnbtech.entity.Bullet@33c461aa, org.psnbtech.entity.Bullet@353cc219, org.psnbtech.entity.Bullet@c1fdc84, org.psnbtech.entity.Bullet@33e2e0ec, org.psnbtech.entity.Bullet@23bb1e0b, org.psnbtech.entity.Bullet@70442c6f, org.psnbtech.entity.Bullet@24d251f, org.psnbtech.entity.Bullet@268c503a, org.psnbtech.entity.Bullet@5dbc49a6, org.psnbtech.entity.Bullet@cca212a, org.psnbtech.entity.Bullet@67448871, org.psnbtech.entity.Bullet@238d0923, org.psnbtech.entity.Bullet@1c43958d, org.psnbtech.entity.Bullet@415d345e]
+Total entities before hit:[org.psnbtech.entity.Player@5ea54e8e]
+Score before hit:0[org.psnbtech.entity.Player@5ea54e8e, org.psnbtech.entity.Asteroid@7d0167e]
+Score after adding bullets20 [org.psnbtech.entity.Player@5ea54e8e, org.psnbtech.entity.Bullet@3712d6cb, org.psnbtech.entity.Bullet@782ecd33, org.psnbtech.entity.Bullet@c8b3d86, org.psnbtech.entity.Bullet@befa98f, org.psnbtech.entity.Bullet@2a6a92b7, org.psnbtech.entity.Bullet@24a3959c, org.psnbtech.entity.Bullet@7111fb83, org.psnbtech.entity.Bullet@74497ff, org.psnbtech.entity.Bullet@7945428a, org.psnbtech.entity.Bullet@4172274b, org.psnbtech.entity.Bullet@3fc11105, org.psnbtech.entity.Bullet@1c19926d, org.psnbtech.entity.Bullet@4f9bc276, org.psnbtech.entity.Bullet@1f83fcb1, org.psnbtech.entity.Bullet@287d8f7d, org.psnbtech.entity.Bullet@78a7eae5, org.psnbtech.entity.Bullet@69be0ff5, org.psnbtech.entity.Bullet@69d81007, org.psnbtech.entity.Bullet@2d9a7c26]
 Score after hit:20 20.0 20
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -1,16 +1,16 @@
 "Inside test case 3 no of lives: 
-7Asteroid Postion: 618.1849655793164 68.30990315458442
+8Asteroid Postion: 708.9935612406339 114.93989850107272
 Player position :275.0 275.0
 collision state :false
-6Asteroid Postion: 65.6050668777635 68.62534213922709
-5Player position :65.6050668777635 68.62534213922709
+9Asteroid Postion: 161.56231626208924 113.71753075237365
+8Player position :161.56231626208924 113.71753075237365
 collision state :true
 Inside update of asteroid: 
-7Asteroid position :442.2405810841575 481.104006270746
-'Asteroid velocity :0.0753925004992773
-9Asteorid position :442.69293608715316 479.2332515456827
-;Asteorid velocity :0.0753925004992773 -0.9353773625316428
-AAsteorid expected position :442.3159735846568 480.1686289082144
+;Asteroid position :-176.35658522312144 116.43266178156276
+'Asteroid velocity :1.0666478526916308
+:Asteorid position :380.04330189302834 115.42483382766912
+;Asteorid velocity :1.0666478526916308 -0.5039139769468245
+CAsteorid expected position :-175.2899373704298 115.92874780461594
 Inside update of player: 
 Player position :275.0 275.0
 Player velocity :0.0
@@ -20,41 +20,41 @@
 =Player velocity :-0.017873817092537762 -0.07616496102888529
 @Player expected position :274.98212618290745 274.9238350389711
  inside entities test case
-ˆentities: [org.psnbtech.entity.Player@4b61bd0a, org.psnbtech.entity.Asteroid@143468f5, org.psnbtech.entity.Asteroid@1410934c, org.psnbtech.entity.Asteroid@2a69e003, org.psnbtech.entity.Asteroid@6ca691a9, org.psnbtech.entity.Asteroid@5be23f08] 0
+Ùentities: [org.psnbtech.entity.Player@2df6189, org.psnbtech.entity.Asteroid@21798f41, org.psnbtech.entity.Asteroid@7c34753, org.psnbtech.entity.Asteroid@6e88ae9f, org.psnbtech.entity.Asteroid@17a259ee, org.psnbtech.entity.Asteroid@7a4ccfdc] 0
  inside collision test case
 lives after collision: 2
  inside level test case
 
 level up
-≠removevel info:1 [org.psnbtech.entity.Player@5f9786f9, org.psnbtech.entity.Asteroid@30b7b26e, org.psnbtech.entity.Asteroid@4745788c, org.psnbtech.entity.Asteroid@6c530f54]
+≠removevel info:1 [org.psnbtech.entity.Player@4e9bb9ce, org.psnbtech.entity.Asteroid@3689fb30, org.psnbtech.entity.Asteroid@3aa853c0, org.psnbtech.entity.Asteroid@41d48216]
 	Inside score test case
 	player position275.0 275.0
 	
 Score :0
-	ATotal entities before hit:[org.psnbtech.entity.Player@12d166ce]
-	`Score before hit:0[org.psnbtech.entity.Player@12d166ce, org.psnbtech.entity.Asteroid@40c482e0]
-	ÉScore after adding bullets20 [org.psnbtech.entity.Player@12d166ce, org.psnbtech.entity.Bullet@44d807b4, org.psnbtech.entity.Bullet@5c78a3b8, org.psnbtech.entity.Bullet@450659ef, org.psnbtech.entity.Bullet@21b1102d, org.psnbtech.entity.Bullet@25504608, org.psnbtech.entity.Bullet@3cac5479, org.psnbtech.entity.Bullet@4b92bb22, org.psnbtech.entity.Bullet@628bea05, org.psnbtech.entity.Bullet@45cc905a, org.psnbtech.entity.Bullet@1b9d1b06, org.psnbtech.entity.Bullet@4588e8fc, org.psnbtech.entity.Bullet@78eee98a, org.psnbtech.entity.Bullet@5901e88d, org.psnbtech.entity.Bullet@2a379d80, org.psnbtech.entity.Bullet@287a4f32, org.psnbtech.entity.Bullet@27d7510e, org.psnbtech.entity.Bullet@714490f9, org.psnbtech.entity.Bullet@6789c8cc, org.psnbtech.entity.Bullet@1d7008d0]
+	ATotal entities before hit:[org.psnbtech.entity.Player@7f77d7c9]
+	`Score before hit:0[org.psnbtech.entity.Player@7f77d7c9, org.psnbtech.entity.Asteroid@6c6c0b60]
+	ÅScore after adding bullets20 [org.psnbtech.entity.Player@7f77d7c9, org.psnbtech.entity.Bullet@32867a06, org.psnbtech.entity.Bullet@1b330b1d, org.psnbtech.entity.Bullet@5abb5e2d, org.psnbtech.entity.Bullet@56006911, org.psnbtech.entity.Bullet@57d76f9d, org.psnbtech.entity.Bullet@543fed99, org.psnbtech.entity.Bullet@54f58b05, org.psnbtech.entity.Bullet@168286b, org.psnbtech.entity.Bullet@6d2f145c, org.psnbtech.entity.Bullet@46576f45, org.psnbtech.entity.Bullet@3e026929, org.psnbtech.entity.Bullet@7ee925f2, org.psnbtech.entity.Bullet@6b715387, org.psnbtech.entity.Bullet@16a134eb, org.psnbtech.entity.Bullet@3b474c37, org.psnbtech.entity.Bullet@cb63818, org.psnbtech.entity.Bullet@6dbabf62, org.psnbtech.entity.Bullet@7223c852, org.psnbtech.entity.Bullet@730414d5]
 	Score after hit:20 20.0 20
 
 "Inside test case 3 no of lives: 
 
-9Asteroid Postion: -529.7751473974374 305.72914612739146
+7Asteroid Postion: 625.2147075890416 42.72138307734113
 
 Player position :275.0 275.0
 
 collision state :false
 
-7Asteroid Postion: 16.299702721781713 305.459258929308
+7Asteroid Postion: 71.26553552055532 41.95503317961893
 
-6Player position :16.299702721781713 305.459258929308
+6Player position :71.26553552055532 41.95503317961893
 
 collision state :true
 Inside update of asteroid: 
-9Asteroid position :427.87527944381293 72.68971806604745
-'Asteroid velocity :1.0183414045215817
-9Asteorid position :433.98532787094246 72.73985786327177
-;Asteorid velocity :1.0183414045215817 0.02506989861215983
-AAsteorid expected position :428.89362084833454 72.7147879646596
+9Asteroid position :219.93505586870793 49.03469203981382
+(Asteroid velocity :0.10239033667705101
+9Asteorid position :220.54939788877022 51.51280047867567
+;Asteorid velocity :0.10239033667705101 1.2390542194309233
+CAsteorid expected position :220.03744620538498 50.273746259244746
 Inside update of player: 
 Player position :275.0 275.0
 Player velocity :0.0
@@ -64,18 +64,18 @@ Score :0
 =Player velocity :-0.017873817092537762 -0.07616496102888529
 @Player expected position :274.98212618290745 274.9238350389711
  inside entities test case
-ıentities: [org.psnbtech.entity.Player@23fd4b9, org.psnbtech.entity.Asteroid@518f7b87, org.psnbtech.entity.Asteroid@3ee48a23, org.psnbtech.entity.Asteroid@478f7f6f, org.psnbtech.entity.Asteroid@3be9e13b, org.psnbtech.entity.Asteroid@1190f682] 0
+ˆentities: [org.psnbtech.entity.Player@5ab78da7, org.psnbtech.entity.Asteroid@3160dd51, org.psnbtech.entity.Asteroid@79491ac9, org.psnbtech.entity.Asteroid@34f04d05, org.psnbtech.entity.Asteroid@52cc3489, org.psnbtech.entity.Asteroid@65f1e1d4] 0
  inside collision test case
 lives after collision: 2
  inside level test case
 
 level up
-≠removevel info:1 [org.psnbtech.entity.Player@7dcdbf5e, org.psnbtech.entity.Asteroid@53bbb1a8, org.psnbtech.entity.Asteroid@5a8e2672, org.psnbtech.entity.Asteroid@5c526af1]
+≠removevel info:1 [org.psnbtech.entity.Player@74f95f04, org.psnbtech.entity.Asteroid@64cf809c, org.psnbtech.entity.Asteroid@67a3659f, org.psnbtech.entity.Asteroid@25924748]
 Inside score test case
 player position275.0 275.0
 
 Score :0
-ATotal entities before hit:[org.psnbtech.entity.Player@59dab984]
-`Score before hit:0[org.psnbtech.entity.Player@59dab984, org.psnbtech.entity.Asteroid@76942dd9]
-ÄScore after adding bullets20 [org.psnbtech.entity.Player@59dab984, org.psnbtech.entity.Bullet@6a2c12e7, org.psnbtech.entity.Bullet@3c3c539a, org.psnbtech.entity.Bullet@3026cb00, org.psnbtech.entity.Bullet@670bc238, org.psnbtech.entity.Bullet@6d3a5f14, org.psnbtech.entity.Bullet@33c461aa, org.psnbtech.entity.Bullet@353cc219, org.psnbtech.entity.Bullet@c1fdc84, org.psnbtech.entity.Bullet@33e2e0ec, org.psnbtech.entity.Bullet@23bb1e0b, org.psnbtech.entity.Bullet@70442c6f, org.psnbtech.entity.Bullet@24d251f, org.psnbtech.entity.Bullet@268c503a, org.psnbtech.entity.Bullet@5dbc49a6, org.psnbtech.entity.Bullet@cca212a, org.psnbtech.entity.Bullet@67448871, org.psnbtech.entity.Bullet@238d0923, org.psnbtech.entity.Bullet@1c43958d, org.psnbtech.entity.Bullet@415d345e]
+ATotal entities before hit:[org.psnbtech.entity.Player@5ea54e8e]
+_Score before hit:0[org.psnbtech.entity.Player@5ea54e8e, org.psnbtech.entity.Asteroid@7d0167e]
+ÄScore after adding bullets20 [org.psnbtech.entity.Player@5ea54e8e, org.psnbtech.entity.Bullet@3712d6cb, org.psnbtech.entity.Bullet@782ecd33, org.psnbtech.entity.Bullet@c8b3d86, org.psnbtech.entity.Bullet@befa98f, org.psnbtech.entity.Bullet@2a6a92b7, org.psnbtech.entity.Bullet@24a3959c, org.psnbtech.entity.Bullet@7111fb83, org.psnbtech.entity.Bullet@74497ff, org.psnbtech.entity.Bullet@7945428a, org.psnbtech.entity.Bullet@4172274b, org.psnbtech.entity.Bullet@3fc11105, org.psnbtech.entity.Bullet@1c19926d, org.psnbtech.entity.Bullet@4f9bc276, org.psnbtech.entity.Bullet@1f83fcb1, org.psnbtech.entity.Bullet@287d8f7d, org.psnbtech.entity.Bullet@78a7eae5, org.psnbtech.entity.Bullet@69be0ff5, org.psnbtech.entity.Bullet@69d81007, org.psnbtech.entity.Bullet@2d9a7c26]
 Score after hit:20 20.0 20
