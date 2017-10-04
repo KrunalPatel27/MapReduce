@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.umkc.rashmi.GameTestController" tests="8" skipped="0" failures="0" errors="0" timestamp="2017-09-30T18:27:15" hostname="DESKTOP-BD6839L" time="4.178">
+<testsuite name="edu.umkc.rashmi.GameTestController" tests="8" skipped="0" failures="0" errors="0" timestamp="2017-10-03T17:36:11" hostname="DESKTOP-BD6839L" time="4.329">
   <properties/>
-  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.016"/>
+  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.026"/>
+  <testcase name="testUpdateGameCollision" classname="edu.umkc.rashmi.GameTestController" time="0.009"/>
+  <testcase name="testUpdateGameLevel" classname="edu.umkc.rashmi.GameTestController" time="0.014"/>
+  <testcase name="testUpdateGameScore" classname="edu.umkc.rashmi.GameTestController" time="2.033"/>
+  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.022"/>
   <testcase name="testUpdateGameCollision" classname="edu.umkc.rashmi.GameTestController" time="0.012"/>
-  <testcase name="testUpdateGameLevel" classname="edu.umkc.rashmi.GameTestController" time="0.011"/>
-  <testcase name="testUpdateGameScore" classname="edu.umkc.rashmi.GameTestController" time="2.024"/>
-  <testcase name="testUpdateGameEntities" classname="edu.umkc.rashmi.GameTestController" time="0.019"/>
-  <testcase name="testUpdateGameCollision" classname="edu.umkc.rashmi.GameTestController" time="0.023"/>
   <testcase name="testUpdateGameLevel" classname="edu.umkc.rashmi.GameTestController" time="0.012"/>
-  <testcase name="testUpdateGameScore" classname="edu.umkc.rashmi.GameTestController" time="2.018"/>
+  <testcase name="testUpdateGameScore" classname="edu.umkc.rashmi.GameTestController" time="2.026"/>
   <system-out><![CDATA[ inside entities test case
 entities: [org.psnbtech.entity.Player@4b61bd0a, org.psnbtech.entity.Asteroid@143468f5, org.psnbtech.entity.Asteroid@1410934c, org.psnbtech.entity.Asteroid@2a69e003, org.psnbtech.entity.Asteroid@6ca691a9, org.psnbtech.entity.Asteroid@5be23f08] 0
  inside collision test case

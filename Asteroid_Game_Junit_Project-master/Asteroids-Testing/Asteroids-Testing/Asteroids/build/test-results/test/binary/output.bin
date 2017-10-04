@@ -1,16 +1,16 @@
 "Inside test case 3 no of lives: 
-:Asteroid Postion: -323.11290563929185 223.51539173426448
+7Asteroid Postion: 618.1849655793164 68.30990315458442
 Player position :275.0 275.0
 collision state :false
-7Asteroid Postion: 231.5978885172193 223.7039804863429
-6Player position :231.5978885172193 223.7039804863429
+6Asteroid Postion: 65.6050668777635 68.62534213922709
+5Player position :65.6050668777635 68.62534213922709
 collision state :true
 Inside update of asteroid: 
-9Asteroid position :211.09015225062132 491.8063733566505
-(Asteroid velocity :-1.4302567926143241
-8Asteorid position :202.5086114949354 491.7769900614635
->Asteorid velocity :-1.4302567926143241 -0.014691647593513539
-?Asteorid expected position :209.659895458007 491.791681709057
+7Asteroid position :442.2405810841575 481.104006270746
+'Asteroid velocity :0.0753925004992773
+9Asteorid position :442.69293608715316 479.2332515456827
+;Asteorid velocity :0.0753925004992773 -0.9353773625316428
+AAsteorid expected position :442.3159735846568 480.1686289082144
 Inside update of player: 
 Player position :275.0 275.0
 Player velocity :0.0
@@ -38,23 +38,23 @@ Score :0
 
 "Inside test case 3 no of lives: 
 
-7Asteroid Postion: 985.6529787763856 349.2671911619525
+9Asteroid Postion: -529.7751473974374 305.72914612739146
 
 Player position :275.0 275.0
 
 collision state :false
 
-6Asteroid Postion: 438.127149468347 348.6998211369141
+7Asteroid Postion: 16.299702721781713 305.459258929308
 
-5Player position :438.127149468347 348.6998211369141
+6Player position :16.299702721781713 305.459258929308
 
 collision state :true
 Inside update of asteroid: 
-8Asteroid position :1058.962751115284 330.4130857742643
-(Asteroid velocity :-0.5763887102730194
-9Asteorid position :505.5044188536458 333.28728160479267
-:Asteorid velocity :-0.5763887102730194 1.437097915264185
-AAsteorid expected position :1058.386362405011 331.8501836895285
+9Asteroid position :427.87527944381293 72.68971806604745
+'Asteroid velocity :1.0183414045215817
+9Asteorid position :433.98532787094246 72.73985786327177
+;Asteorid velocity :1.0183414045215817 0.02506989861215983
+AAsteorid expected position :428.89362084833454 72.7147879646596
 Inside update of player: 
 Player position :275.0 275.0
 Player velocity :0.0

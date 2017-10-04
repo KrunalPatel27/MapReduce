@@ -27,7 +27,6 @@ public class Game extends JFrame {
 	 * The Serial Version Unique Identifier.
 	 */
 	public static final long serialVersionUID = -3535839203174039672L;
-
 	/**
 	 * The number of frame per second the game should run at.
 	 */
