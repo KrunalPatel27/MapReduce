@@ -137,14 +137,14 @@ public class processCoverage {
         JobConf conf = new JobConf(processCoverage.class);
 
         conf.setJobName("TestCoverage");
-        
+        conf.setJarByClass(processCoverage.class);
         conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(Text.class);
         conf.setMapOutputKeyClass(Text.class);
         conf.setMapOutputValueClass(Text.class);
 
         conf.setMapperClass(E_EMapper.class);
-        conf.setCombinerClass(E_EReduce.class);
+        //conf.setCombinerClass(E_EReduce.class);
         conf.setReducerClass(E_EReduce.class);
         conf.setInputFormat(TextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
@@ -153,5 +153,6 @@ public class processCoverage {
         FileOutputFormat.setOutputPath(conf, new Path(args[1]));
 
         JobClient.runJob(conf);
+       // conf.waitForCompletion(true);
     }
 }
