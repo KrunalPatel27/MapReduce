@@ -4,7 +4,6 @@
 import java.util.*;
 
 import java.io.IOException;
-import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.FileNotFoundException;
@@ -74,13 +73,14 @@ public class processCoverage {
             Reducer< Text, Text, Text, Text >
     {   
         private TreeMap<String,String> treeSet;
-        public String sortedByCoverage (Iterator values){
+
+        public String sortedByCoverage (Iterator <Text> values){
             treeSet = new TreeMap<String,String>();
             String lasttoken = null;
             String line = "";
             int length =0;
             while (values.hasNext()) {
-                line = (String)values.next().get();  
+                line = values.next().get();  
                 StringTokenizer s = new StringTokenizer(line,"\t"); 
                 String testName = s.nextToken(); 
                 String linesOfCoverageByTest = s.nextToken(); //Integer.parseInt(s.nextToken());
@@ -122,9 +122,9 @@ public class processCoverage {
         public void reduce( Text key, Iterator <Text> values,
                             OutputCollector<Text, Text> output, Reporter reporter) throws IOException
         {
-           
+           String returnVal = sortedByCoverage(values);
 
-            output.collect(key, new Text(sortedByCoverage(values)) );
+            output.collect(key, new Text(returnVal) );
             
 
 
