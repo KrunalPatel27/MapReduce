@@ -93,5 +93,3 @@ task createTxt(type:JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'XMLParser'
 }
-
-task
