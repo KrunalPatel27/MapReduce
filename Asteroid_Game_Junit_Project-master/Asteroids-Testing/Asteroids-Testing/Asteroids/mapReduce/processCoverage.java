@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.FileNotFoundException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -70,9 +71,9 @@ public class processCoverage {
     public static class E_EReduce extends MapReduceBase implements
             Reducer< Text, Text, Text, Text >
     {   
-        private TreeMap treeSet;
+        private TreeMap treeSet<Integer,String>;
         public String sortedByCoverage (Iterator values){
-            treeSet = new TreeMap();
+            treeSet = new TreeMap<Integer,String>();
             String lasttoken = null;
             String line = "";
             int length =0;
