@@ -95,9 +95,9 @@ public class processCoverage {
             while(i.hasNext()) {
                 Map.Entry me = (Map.Entry)i.next();
                 //to deal with descending order
-                array[counter--] = me.getValue();
-                if(previousKey == me.getKey()){
-                    if(array[counter+1].compareTo( array[counter+2] > 0 )){
+                array[counter--] = me.getValue().toString();
+                if(previousKey == Integer.parseInt(me.getKey()) ){
+                    if(array[counter+1].compareTo( array[counter+2]) > 0 ){
                         String temp = array[counter +1];
                         array[counter+1] = array[counter+2];
                         array[counter+2] = temp;
