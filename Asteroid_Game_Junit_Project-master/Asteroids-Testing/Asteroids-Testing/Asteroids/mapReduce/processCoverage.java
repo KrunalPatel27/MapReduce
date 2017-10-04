@@ -107,7 +107,7 @@ public class processCoverage {
                         array[counter+2] = temp;
                     }
                 }
-                previousKey = me.getKey();
+                previousKey = me.getKey().toString();
             }
             treeSet.clear();
             String returnString = array[0];
