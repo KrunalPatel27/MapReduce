@@ -50,7 +50,7 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDirs = ['src', 'XMLParser']
+            srcDirs = ['src', 'XMLParser', 'mapReduce']
         }
     }
     test{
