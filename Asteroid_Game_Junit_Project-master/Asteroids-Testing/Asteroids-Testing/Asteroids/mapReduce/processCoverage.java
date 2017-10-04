@@ -18,6 +18,7 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.*;
 
+
 public class processCoverage {
     
 
@@ -33,7 +34,7 @@ public class processCoverage {
         public void configure(JobConf conf){
             try{
                 Path pt=new Path("hdfs:/path/to/file");//Location of file in HDFS
-                File fs = FileSystem.get(new Configuration());
+                FileSystem fs = FileSystem.get(conf);
                 BufferedReader br=new BufferedReader(new InputStreamReader(fs.open(pt)));
                 String line;
                 line=br.readLine();
