@@ -80,7 +80,7 @@ public class processCoverage {
             String line = "";
             int length =0;
             while (values.hasNext()) {
-                line = ((Text)values.next()).get();  
+                line =  ((Text)values.next()).toString();
                 StringTokenizer s = new StringTokenizer(line,"\t"); 
                 String testName = s.nextToken(); 
                 String linesOfCoverageByTest = s.nextToken(); //Integer.parseInt(s.nextToken());
