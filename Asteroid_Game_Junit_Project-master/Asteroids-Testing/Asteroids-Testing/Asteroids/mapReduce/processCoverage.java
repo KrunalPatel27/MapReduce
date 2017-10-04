@@ -71,7 +71,7 @@ public class processCoverage {
     public static class E_EReduce extends MapReduceBase implements
             Reducer< Text, Text, Text, Text >
     {   
-        private TreeMap treeSet<Integer,String>;
+        private TreeMap<Integer,String> treeSet;
         public String sortedByCoverage (Iterator values){
             treeSet = new TreeMap<Integer,String>();
             String lasttoken = null;
