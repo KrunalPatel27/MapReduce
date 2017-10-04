@@ -5,6 +5,12 @@ import java.util.*;
 
 import java.io.IOException;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.conf.*;
@@ -27,7 +33,7 @@ public class processCoverage {
         public void configure(JobConf conf){
             try{
                 Path pt=new Path("hdfs:/path/to/file");//Location of file in HDFS
-                FileSystem fs = FileSystem.get(new Configuration());
+                File fs = FileSystem.get(new Configuration());
                 BufferedReader br=new BufferedReader(new InputStreamReader(fs.open(pt)));
                 String line;
                 line=br.readLine();
