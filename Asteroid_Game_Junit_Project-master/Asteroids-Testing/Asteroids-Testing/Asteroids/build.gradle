@@ -89,6 +89,9 @@ jar {
         attributes( "Main-Class": "processCoverage" )
     }
 }
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}
 task createTxt(type:JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'XMLParser'
