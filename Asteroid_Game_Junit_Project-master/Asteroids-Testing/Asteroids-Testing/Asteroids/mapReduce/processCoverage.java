@@ -39,7 +39,7 @@ public class processCoverage {
                // FileSystem fs = FileSystem.get(conf);
                 String filename = conf.get("map.input.file");
                 BufferedReader br=new BufferedReader(new FileReader(filename)); //.open(pt)));
-                while (reader.readLine() != null) linesOfCoverageByTest++;
+                while (br.readLine() != null) linesOfCoverageByTest++;
                 br.close();                     
             }catch(FileNotFoundException e){
                 e.printStackTrace();
