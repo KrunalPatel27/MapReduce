@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Asteroids.iml" filepath="$PROJECT_DIR$/.idea/modules/Asteroids.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Asteroids_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Asteroids_main.iml" group="Asteroids" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Asteroids_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Asteroids_test.iml" group="Asteroids" />
     </modules>
   </component>
 </project>
