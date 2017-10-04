@@ -36,6 +36,8 @@ configurations{
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'junit:junit:4.12'
+    compile 'org.apache.hadoop:hadoop-common:2.8.1'
+    compile 'org.apache.hadoop:hadoop-mapreduce-client-core:2.8.1'
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
@@ -43,6 +45,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //emma "emma:emma:2.0.5312"
     //emma "emma:emma_ant:2.0.5312"
+
 }
 sourceSets {
     main {
@@ -79,7 +82,16 @@ jacocoTestReport {
         html.enabled true
     }
 }
+jar {
+    description = "Assembles a Hadoop ready jar file"
+
+    manifest {
+        attributes( "Main-Class": "processCoverage" )
+    }
+}
 task createTxt(type:JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'XMLParser'
 }
+
+task
