@@ -38,7 +38,10 @@ public class processCoverage {
             try{
                // Path pt=new Path("hdfs:/path/to/file");//Location of file in HDFS
                // FileSystem fs = FileSystem.get(conf);
+
                 String filename = conf.get("map.input.file");
+                //filename = filename.getName();
+                System.out.println(filename);
                 BufferedReader br=new BufferedReader(new FileReader(filename)); //.open(pt)));
                 while (br.readLine() != null) linesOfCoverageByTest++;
                 br.close();                     
