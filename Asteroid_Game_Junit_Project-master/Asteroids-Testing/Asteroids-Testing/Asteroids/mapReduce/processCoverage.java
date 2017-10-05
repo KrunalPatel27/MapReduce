@@ -88,7 +88,7 @@ public class processCoverage {
                 String testName = s.nextToken(); 
                 String linesOfCoverageByTest = s.nextToken(); //Integer.parseInt(s.nextToken());
                 treeSet.put(new String(linesOfCoverageByTest), new String(testName));
-                System.out.println(linesOfCoverageByTest +"\t:\t" + testName);
+                //System.out.println(linesOfCoverageByTest +"\t:\t" + testName);
                 length++;
             }
              // Get a set of the entries
@@ -104,7 +104,7 @@ public class processCoverage {
                 Map.Entry me = (Map.Entry)i.next();
                 //to deal with descending order
                 array[counter--] = me.getValue().toString();
-                System.out.println(array[counter+1] + "putting to array" + me.getKey() );
+                //System.out.println(array[counter+1] + "putting to array" + me.getKey() );
                 if(previousKey == me.getKey() ){
                     if(array[counter+1].compareTo( array[counter+2]) > 0 ){
                         String temp = array[counter +1];
