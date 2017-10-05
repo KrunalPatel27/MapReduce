@@ -40,7 +40,7 @@ public class processCoverage {
                // FileSystem fs = FileSystem.get(conf);
 
                 String filename = conf.get("map.input.file");
-                //filename = filename.getName();
+                filename = filename.substring(5);
                 System.out.println(conf.get("map.input.file"));
                 BufferedReader br=new BufferedReader(new FileReader(filename)); //.open(pt)));
                 while (br.readLine() != null) linesOfCoverageByTest++;
