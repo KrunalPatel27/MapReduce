@@ -57,6 +57,7 @@ public class processCoverage {
             // get filename
             FileSplit fsplit = (FileSplit) reporter.getInputSplit();
             String testName = fsplit.getPath().getName();
+            testName = testName.replace(".txt", "");
 
             String line = value.toString();
 
@@ -77,12 +78,14 @@ public class processCoverage {
             String lasttoken = null;
             String line = "";
             int length =0;
+            System.out.println("StartReducer newline");
             while (values.hasNext()) {
                 line =  ((Text)values.next()).toString();
                 StringTokenizer s = new StringTokenizer(line,"\t"); 
                 String testName = s.nextToken(); 
                 String linesOfCoverageByTest = s.nextToken(); //Integer.parseInt(s.nextToken());
                 treeSet.put(new String(linesOfCoverageByTest), new String(testName));
+                System.out.println(linesOfCoverageByTest +"\t:\t" + testName);
                 length++;
             }
              // Get a set of the entries
@@ -98,6 +101,7 @@ public class processCoverage {
                 Map.Entry me = (Map.Entry)i.next();
                 //to deal with descending order
                 array[counter--] = me.getValue().toString();
+                System.out.println(array[counter+1] + "putting to array" + me.getKey() );
                 if(previousKey == me.getKey() ){
                     if(array[counter+1].compareTo( array[counter+2]) > 0 ){
                         String temp = array[counter +1];
@@ -112,6 +116,7 @@ public class processCoverage {
             for(int x =1; x < length; x++){
                 returnString = returnString + ", " + array[x];
             }
+            System.out.println(returnString);
             return returnString;
             
         }
