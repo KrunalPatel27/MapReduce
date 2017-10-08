@@ -57,7 +57,7 @@ public class processCoverage {
             FileSplit fsplit = (FileSplit) reporter.getInputSplit();
             String testName = fsplit.getPath().getName();
             testName = testName.replace(".txt", "");
-            String line = value.toString();
+            String line = "<"+value.toString()+", ";
             output.collect(new Text(line), new Text(testName + "\t"+ linesOfCoverageByTest));
         }
     }
@@ -117,7 +117,6 @@ public class processCoverage {
                             OutputCollector<Text, Text> output, Reporter reporter) throws IOException
         {
            String returnVal = sortedByCoverage(values);
-           String returnKey = "<" + Key.toString()+", ";
             output.collect(key, new Text(returnVal) );
         }
     }
