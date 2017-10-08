@@ -36,12 +36,8 @@ public class processCoverage {
 
         public void configure(JobConf conf){
             try{
-               // Path pt=new Path("hdfs:/path/to/file");//Location of file in HDFS
-               // FileSystem fs = FileSystem.get(conf);
-
                 String filename = conf.get("map.input.file");
                 filename = filename.substring(5);
-                System.out.println(conf.get("map.input.file"));
                 BufferedReader br=new BufferedReader(new FileReader(filename)); //.open(pt)));
                 while (br.readLine() != null) linesOfCoverageByTest++;
                 br.close();                     
@@ -61,10 +57,7 @@ public class processCoverage {
             FileSplit fsplit = (FileSplit) reporter.getInputSplit();
             String testName = fsplit.getPath().getName();
             testName = testName.replace(".txt", "");
-
             String line = value.toString();
-
-
             output.collect(new Text(line), new Text(testName + "\t"+ linesOfCoverageByTest));
         }
     }
@@ -81,21 +74,18 @@ public class processCoverage {
             String lasttoken = null;
             String line = "";
             int length =0;
-            System.out.println("StartReducer newline");
             while (values.hasNext()) {
                 line =  ((Text)values.next()).toString();
                 StringTokenizer s = new StringTokenizer(line,"\t"); 
                 String testName = s.nextToken(); 
                 String linesOfCoverageByTest = s.nextToken(); //Integer.parseInt(s.nextToken());
                 treeSet.put(new String(linesOfCoverageByTest), new String(testName));
-                //System.out.println(linesOfCoverageByTest +"\t:\t" + testName);
                 length++;
             }
              // Get a set of the entries
             Set set = treeSet.entrySet();
             // Get an iterator
             Iterator i = set.iterator();
-
             String[] array = new String[length];
             String previousKey= "";
             int counter = length - 1;
@@ -104,7 +94,6 @@ public class processCoverage {
                 Map.Entry me = (Map.Entry)i.next();
                 //to deal with descending order
                 array[counter--] = me.getValue().toString();
-                //System.out.println(array[counter+1] + "putting to array" + me.getKey() );
                 if(previousKey == me.getKey() ){
                     if(array[counter+1].compareTo( array[counter+2]) > 0 ){
                         String temp = array[counter +1];
@@ -115,12 +104,11 @@ public class processCoverage {
                 previousKey = me.getKey().toString();
             }
             treeSet.clear();
-            String returnString = array[0];
+            String returnString = "("+ array[0];
             for(int x =1; x < length; x++){
                 returnString = returnString + ", " + array[x];
             }
-            System.out.println(returnString);
-            return returnString;
+            return returnString + ")>";
             
         }
 
@@ -129,11 +117,8 @@ public class processCoverage {
                             OutputCollector<Text, Text> output, Reporter reporter) throws IOException
         {
            String returnVal = sortedByCoverage(values);
-
+           String returnKey = "<" + Key.toString()+", ";
             output.collect(key, new Text(returnVal) );
-            
-
-
         }
     }
 
@@ -150,7 +135,6 @@ public class processCoverage {
         conf.setMapOutputValueClass(Text.class);
 
         conf.setMapperClass(E_EMapper.class);
-        //conf.setCombinerClass(E_EReduce.class);
         conf.setReducerClass(E_EReduce.class);
         conf.setInputFormat(TextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
