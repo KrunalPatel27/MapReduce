@@ -1,6 +1,6 @@
 **MapReduce Implementation for Test Coverage**
 
-**email address: kpate236@uic.edu**
+**Email address: kpate236@uic.edu**
 **First Name: Krunal, Last Name: Patel**
 
 **Link: https://youtu.be/0UYzarpr15c**
@@ -21,5 +21,7 @@ To parse XML report files
 
 To Run the MapReduce
 	create JAR using: 'gradle jar' 
+	
+Credits: For this project I am using ./https://github.com/rashmitripathi/Asteroid_Game_Junit_Project as base, where the author has test cases written. 
 
 
