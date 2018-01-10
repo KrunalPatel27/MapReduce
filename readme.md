@@ -10,7 +10,7 @@ Make sure your in this directory: Asteroid_Game_Junit_Project-master\Asteroids-T
 
 To create Jacoco Coverage Reports
 
-	run command: ```gradle test --tests package.classname.methodname jacocoTestReport```
+	run command: gradle test --tests package.classname.methodname jacocoTestReport
 	this command will create individual test coverage reports in build/reprots/jacoco
 	I just copied these XML testReport files into a seperate directory called IndividualCoverageReport/XML to Parse later
 
