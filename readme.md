@@ -3,7 +3,7 @@
 **Email address: kpate236@uic.edu**
 **First Name: Krunal, Last Name: Patel**
 
-**Link: https://youtu.be/0UYzarpr15c**
+**[Youtube Demo Link](https://youtu.be/0UYzarpr15c)**
 
 
 Make sure your in this directory: Asteroid_Game_Junit_Project-master\Asteroids-Testing\Asteroids-Testing\Asteroids
@@ -22,6 +22,7 @@ To parse XML report files
 To Run the MapReduce
 	create JAR using: 'gradle jar' 
 	
-Credits: For this project I am using ./https://github.com/rashmitripathi/Asteroid_Game_Junit_Project as base, where the author has test cases written. 
+Credits: For this project I am using [Repo](https://github.com/rashmitripathi/Asteroid_Game_Junit_Project) as base, where the author has written some test cases along with source code. 
+I wrote my own parser for Jacoco and MapReduce.  
 
 
